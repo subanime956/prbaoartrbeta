@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busqueda Avanzada</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .entry-title {
+          display: none;
+          
+        }
+
+        .custom-title {
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            padding: 20px;
+            justify-items: center;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            width: 150px;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .card-content {
+            padding: 10px;
+            text-align: center;
+            min-height: 50px;
+        }
+
+        .card-content h3 {
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        .search-container {
+            width: 100%;
+            padding: 10px 20px;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .suggestions {
+            position: absolute;
+            width: calc(100% - 40px);
+            background: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            max-height: 150px;
+            overflow-y: auto;
+            display: none;
+            z-index: 1000;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .suggestion-item:hover {
+            background-color: #eee;
+        }
+
+        /* Animación de agrandamiento */
+        .highlight {
+            animation: pulse 0.5s ease-in-out 2;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2 class="custom-title">Buscador Avanzado Anime</h2>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Buscar anime..." onkeyup="searchAnime()">
+        <div id="suggestions" class="suggestions"></div>
+    </div>
+
+    <div class="container" id="gallery">
+        <!-- Tarjetas generadas dinámicamente -->
+    </div>
+
+    <script>
+        const covers = [
+          
+            {
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEix8T7T4mP5OM8bB2Ab6tT-PzWBM1vrv6LByUoarEpWkZJZeizxm8Rgu1QZEszi6GTMMhkTP8iYm7eRRoatjQ8jua9VMQUi3-eqQFENrcDLVHScFTwac3D5pwtxb6cYz-PzczC9e3-kjOlsXtNitYtRwyBpNbqohFEjIfbPix7jLr3YSqZ52caDnVrVMEhg/s1800/oWbkaF8oZ8AqNbm61e3uXR35qxg.jpg",
+                title: "Masamune-kun no Revenge",
+                keywords: "Masamune Makabe, Aki Adagaki, Yoshino Koiwai, Neko Fujinomiya, Kojūrō Shuri, Tae Futaba, Kanetsugu Gasō, Kinue Hayase, Muriel Besson, Vincent Besson, Mitsuru Futaba, Sumire Kaneko, Pere Adagaki, Tomoko Adagaki, Chinatsu Hayase, 政宗くんのリベンジ, Masamune-kun's Revenge, La venganza de Masamune-kun, La venganza de Masamune kun, Masamune kun no Revenge",
+                link: "https://www.animertr.com/p/mknr.html"
+            },
+            {
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgin-UQ_TwYDRL3dB-Z7pLQ_sO1N5f0wc5FOOKI_3GEmHQF8zVaPTIdcMmuWDuukYXWfkqtH0Zr0aBDNef7pYWHtPC71xsrjmUyDlQNrnzZ7vrnRvapCpGLaa602DFovKcVkug63RHC1C4I6bCMBqzIyenGTyOapoxSKrZqJ4xaLl1R7GcZvwFD6ycrxrN2/s1128/Temporada_1_poster_1.webp",
+                title: "Go-tōbun no hanayome",
+                keywords: "Nino Nakano, Nino, Miku Nakano, Miku, Yotsuba Nakano, Yotsuba, Ichika Nakano, Ichika, Itsuki Nakano, Itsuki, Rena Nakano, Rena, Las Quintillizas, Quintillizas, 五等分の花嫁, Gotoubun no Hanayome, 5-toubun no Hanayome,The Quintessential Quintuplets, The Five Wedded Brides",
+                link: "https://www.animertr.com/p/gotoubun-no-hanayome.html"
+            },
+            {
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiCYIQNuc5Szk2BXFgPBVuMWHfUmVvwmBMIyg12W04vPF8UFTQgPd_F-cc81aS0pCTcAuNQOmSAYq5l4DXRl1y5zpmWWawnUY7A3HgAIGh1CD9FyzrJauGhCMEcIkzbWbyYrg8KTZEpwg3rIraeT6_jkJxJO_5kIPsolBFdOzlsMnh8pwDmVcs-wDkX5QF0/s847/1595927435.jpg",
+                title: "IS: Infinite Stratos",
+                link: ""
+            },
+            {
+                img: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiz-c8YfoAhSdTbj7skawXCln4cWDKshX1tLF2-Il7PLSXBN2EwJdYHdvZOQuReVtvKQZzW7qBsXuTut16mnhGdIraqRoWTvd9Kn-6TEgNZ9-0W4gyVBukAFjcRNZYwEM60SGSojm0_Zhav_q58ZhdfwhhU28SdjSrSvczOAeHNcotY4A4hD4WBlAS7zU_b/s2015/241515168_408332240664920_4244502104291999165_n.jpg",
+                title: "To Love Ru",
+                link: ""
+            }
+        ];
+
+        function displayCovers() {
+            const gallery = document.getElementById("gallery");
+            gallery.innerHTML = "";
+
+            covers.forEach(cover => {
+                const card = document.createElement("a");
+                card.className = "card";
+                card.href = cover.link;
+                card.id = cover.title.replace(/\s+/g, '-').toLowerCase(); // ID basado en el título
+                card.innerHTML = `
+                    <img src="${cover.img}" alt="${cover.title}" style="width: 100%;">
+                    <div class="card-content">
+                        <h3>${cover.title}</h3>
+                    </div>
+                `;
+                gallery.appendChild(card);
+            });
+        }
+
+        function searchAnime() {
+    const input = document.getElementById("searchInput").value.toLowerCase().trim();
+    const suggestionsDiv = document.getElementById("suggestions");
+
+    if (input === "") {
+        suggestionsDiv.style.display = "none";
+        return;
+    }
+
+    const filtered = covers.filter(cover => {
+        // Convertir keywords en array
+        const keywordsArray = cover.keywords ? cover.keywords.split(",").map(k => k.trim().toLowerCase()) : [];
+        
+        return cover.title.toLowerCase().includes(input) || 
+               keywordsArray.some(keyword => keyword.includes(input));
+    });
+
+    if (filtered.length > 0) {
+        suggestionsDiv.innerHTML = filtered
+            .map(cover => `<div class="suggestion-item" onclick="scrollToCard('${cover.title}')">${cover.title}</div>`)
+            .join("");
+        suggestionsDiv.style.display = "block";
+    } else {
+        suggestionsDiv.style.display = "none";
+    }
+}
+
+
+function scrollToCard(title) {
+    document.getElementById("searchInput").value = title;
+    document.getElementById("suggestions").style.display = "none";
+
+    const id = title.replace(/\s+/g, '-').toLowerCase();
+    const card = document.getElementById(id);
+
+    if (card) {
+        card.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Usamos IntersectionObserver para detectar cuando la tarjeta es visible
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    card.classList.add("highlight");
+                    
+                    // Elimina la animación después de 1 segundo
+                    setTimeout(() => {
+                        card.classList.remove("highlight");
+                    }, 1000);
+                    
+                    observer.disconnect(); // Detenemos la observación
+                }
+            });
+        }, { threshold: 1.0 }); // 1.0 significa que el elemento debe estar 100% visible
+
+        observer.observe(card);
+    }
+}
+
+
+        // Inicializar la galería
+        displayCovers();
+    </script>
+</body>
+
+</html>
