@@ -181,21 +181,17 @@
 
   <script>
     function setIframe(src, el) {
-      const oldIframe = document.getElementById('videoPlayer');
-      const newIframe = document.createElement('iframe');
-      newIframe.id = 'videoPlayer';
-      newIframe.src = src;
-      newIframe.allowFullscreen = true;
-      newIframe.style.width = '100%';
-      newIframe.style.maxWidth = '1300px';
-      newIframe.style.aspectRatio = window.innerWidth <= 768 ? '9 / 16' : '16 / 6.5';
-      newIframe.style.border = 'none';
-      newIframe.style.backgroundColor = 'black';
-      oldIframe.replaceWith(newIframe);
+  const iframe = document.getElementById('videoPlayer');
 
-      document.querySelectorAll('.servers button').forEach(btn => btn.classList.remove('active'));
-      el.classList.add('active');
-    }
+  // Cambia solo el video, no el iframe
+  iframe.src = src;
+
+  // Botón activo
+  document.querySelectorAll('.servers button')
+    .forEach(btn => btn.classList.remove('active'));
+
+  el.classList.add('active');
+}
   </script>
 
   <script>
