@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<!-- Font Awesome -->
+  <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+
+<!-- CSS Style Configuracion -->
+  <link rel="stylesheet" href="/assets/css/header.css">
+  <link rel="stylesheet" href="/assets/css/episodio.css">
+  <link rel="stylesheet" href="/assets/css/copiar.css">
+  <link rel="stylesheet" href="/assets/css/subir.css">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title> Otonari no Tenshi-sama ni Itsunomanika Dame Ningen ni Sareteita Ken 2: 1 </title>
+
+</head>
+
+<body>
+
+<!-- JS Script Configuracion -->
+  <script src="/assets/js/header.js"></script>
+  <script src="/assets/js/subir.js" defer></script>
+
+
+  <div id="menuOverlay" onclick="toggleMenu()"></div>
+
+  <div id="mobileMenu">
+    <div class="mobile-menu-items">
+      <a href="/AnimeRTR"><i class="fa fa-home"></i>Inicio</a>
+      <a href="/Anime"><i class="fa fa-play-circle"></i>Anime</a>
+      <a href="/Hentai"><i class="fa fa-heart"></i>Hentai</a>
+      <a href="/Doujins"><i class="fa fa-book"></i>Doujins</a>
+      <a href="/Rule34"><i class="fa fa-fire"></i>Rule34</a>
+      <a href="/Erogames"><i class="fa fa-gamepad"></i>Erogames</a>
+      <a href="/Peticiones"><i class="fa fa-comments"></i>Peticiones</a>
+      <a href="/Contacto"><i class="fa fa-envelope"></i>Contacto</a>
+    </div>
+    <div id="mobileIconsBottom">
+      <a id="social-twitter-mobile" title="X/Twitter"><i class="fa fa-twitter"></i></a>
+      <a id="social-whatsapp-mobile" title="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+      <a id="social-facebook-mobile" title="Facebook"><i class="fa fa-facebook"></i></a>
+      <a id="social-youtube-mobile" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+      <a id="social-donar-mobile" title="Donar"><i class="fa fa-paypal"></i></a>
+    </div>
+  </div>
+
+  <header class="header-wrapper">
+    <div class="header-container">
+      <!-- Botón Menú a la izquierda -->
+      <button class="menu-toggle" onclick="toggleMenu()">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <!-- Logo centrado -->
+      <div class="header-logo">
+        <a href="/AnimeRTR">
+          <img src="/assets/img/AnimeRTR.webp"
+            alt="AnimeRTR" />
+        </a>
+      </div>
+
+      <!-- Menú PC -->
+      <nav class="header-nav">
+        <a href="/">Inicio</a>
+        <a href="/Anime">Anime</a>
+        <a href="/Hentai">Hentai</a>
+        <a href="/Doujins">Doujins</a>
+        <a href="/Rule34">Rule34</a>
+        <a href="/Erogames">Erogames</a>
+        <a href="/Peticiones">Peticiones</a>
+        <a href="/Contacto">Contacto</a>
+      </nav>
+
+      <!-- Redes sociales PC -->
+      <div class="header-social">
+         <a id="social-twitter-pc" title="X/Twitter"><i class="fa fa-twitter"></i></a>
+         <a id="social-whatsapp-pc" title="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+         <a id="social-facebook-pc" title="Facebook"><i class="fa fa-facebook"></i></a>
+         <a id="social-youtube-pc" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+         <a id="social-donar-pc" title="Donar"><i class="fa fa-paypal"></i></a>
+      </div>
+
+
+      <!-- Icono búsqueda derecha -->
+      <a href="#" class="search-icon"><i class="fa fa-search"></i></a>
+    </div>
+ </header>
+
+  <!-- AQUI COMIENZA EL HTML NORMAL CON JS NORMAL -->
+
+
+  <h1> Varesa is Hungry 1 </h1>
+
+  <div class="nav-bar">
+    <a href="ep-anterior"><i class="fa fa-angle-left"></i></a>
+    <a href="anime-portada">Episodios</a>
+    <a href="ep-siguiente"><i class="fa fa-angle-right"></i></a>
+  </div>
+
+  <div class="servers">
+    <button class="active" onclick="setIframe('https://filemoon.to/e/tjbuwa2pz8ts', this)">FM</button>
+    <button onclick="setIframe('https://streamwish.to/e/c35b5lnjrqeq', this)">SW</button>
+  </div>
+
+  <div class="TbVideoCn tab-content">
+  <div class="tab-pane active">
+    <div id="video_box" class="Video">
+    <iframe id="videoPlayer" src="https://filemoon.to/e/tjbuwa2pz8ts" allowfullscreen></iframe>
+  </div>
+  </div>
+  </div>
+
+  <div class="footer">
+    <a class="descarga" href="javascript:void(0)" onclick="openModal()">
+     <i class="fa fa-download"></i> <span>Descargar</span>
+    </a>
+
+    <a class="cronologia" href="URL_DE_CRONOLOGIA">
+     <i class="fa fa-history"></i> <span>Cronología</span>
+    </a>
+  </div>
+
+<div class="donate-banner">
+  <div class="donate-info">
+    <h2>¡Gracias por apoyar nuestros proyectos!</h2>
+  </div>
+</div>
+
+
+
+<!-- Modal de descarga -->
+<div id="downloadModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="closeModal()">×</span>
+    <h2 class="subtitulo" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 18px; color: #333; font-weight: bold; text-align: center;">
+      Contraseña para descomprimir el archivo: 
+      <span id="copyText" onclick="copyToClipboard(this)">&nbsp;ContraseñaRTR&nbsp;</span>
+    </h2>
+
+    <a class="download-btn" href="https://cuty.io/tSahqhKUx8" target="_blank">Descarga Calidad</a>
+    <a class="download-btn-2" href="https://exe.io/CmYM9r" target="_blank">Descarga Calidad N°2</a>
+    <a class="premium-download-btn" href="https://informacion-anime-rtr.blogspot.com/p/r34-ddn-1" target="_blank">&nbsp;Descarga (Premium)&nbsp;</a>
+
+    <br>
+    <div class="donate-text">
+      <p>Dona y obten una Membresía desde $1 y <strong><u>Elimina Anuncios en Descargas</u></strong>. Contenido de calidad. <strong><u> Gana Premios en Efectivo </u></strong></p>
+      <br>
+      <p>Para Donar, haz clic Aquí: <a href="https://www.animertr.com/p/donar" target="_blank">Donación - Premium</a>.</p>
+    </div>
+  </div>
+</div>
+
+
+  <script>
+    function syncBeforeHeight() {
+      const videoBox = document.querySelector('#video_box.Video');
+      const style = window.getComputedStyle(videoBox, '::before');
+      const paddingTop = parseFloat(style.getPropertyValue('padding-top'));
+
+      // Si el before llega a la misma altura que los divs (500px), congelamos
+      if (paddingTop >= 500) {
+        videoBox.style.height = '500px';
+      } else {
+        videoBox.style.height = '';
+      }
+    }
+
+    window.addEventListener('resize', syncBeforeHeight);
+    window.addEventListener('load', syncBeforeHeight);
+  </script>
+
+  <script>
+    function setIframe(src, el) {
+      const oldIframe = document.getElementById('videoPlayer');
+      const newIframe = document.createElement('iframe');
+      newIframe.id = 'videoPlayer';
+      newIframe.src = src;
+      newIframe.allowFullscreen = true;
+      newIframe.style.width = '100%';
+      newIframe.style.maxWidth = '1300px';
+      newIframe.style.aspectRatio = window.innerWidth <= 768 ? '9 / 16' : '16 / 6.5';
+      newIframe.style.border = 'none';
+      newIframe.style.backgroundColor = 'black';
+      oldIframe.replaceWith(newIframe);
+
+      document.querySelectorAll('.servers button').forEach(btn => btn.classList.remove('active'));
+      el.classList.add('active');
+    }
+  </script>
+
+  <script>
+  // Abrir el modal
+  function openModal() {
+    document.getElementById("downloadModal").style.display = "flex";
+  }
+
+  // Cerrar el modal
+  function closeModal() {
+    document.getElementById("downloadModal").style.display = "none";
+  }
+
+  // Cerrar el modal al hacer clic fuera
+  window.onclick = function(event) {
+    var modal = document.getElementById("downloadModal");
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  // Copiar texto al portapapeles
+  function copyToClipboard(element) {
+    const text = element.textContent;
+    const tempInput = document.createElement("textarea");
+    tempInput.value = text;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+    alert("Texto copiado: " + text);
+  }
+</script>
+
+
+<button id="scrollToTopBtn" title="Subir">
+  <i class="fa fa-arrow-up"></i>
+</button>
+
+
+
+</body>
+</html>
