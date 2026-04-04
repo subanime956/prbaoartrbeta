@@ -1,11 +1,144 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <link rel="stylesheet" href="/assets/css/generos.css">
-<meta charset="UTF-8">
-<title>Catálogo</title>
+
+<!-- Font Awesome -->
+  <link rel="stylesheet" href="../../assets/css/font-awesome.min.css">
+
+<!-- CSS Style Configuracion -->
+  <link rel="stylesheet" href="../../assets/css/header.css">
+  <link rel="stylesheet" href="../../assets/css/generos.css">
+  <link rel="stylesheet" href="../../assets/css/copiar.css">
+  <link rel="stylesheet" href="../../assets/css/subir.css">
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title> Genero: Acción </title>
+
 </head>
+
 <body>
+
+<!-- JS Script Configuracion -->
+  <script src="header.js"></script>
+  <script src="subir.js" defer></script>
+
+
+  <div id="menuOverlay" onclick="toggleMenu()"></div>
+
+  <div id="mobileMenu">
+    <div class="mobile-menu-items">
+      <a href="#"><i class="fa fa-home"></i>Inicio</a>
+      <a href="#"><i class="fa fa-play-circle"></i>Anime</a>
+      <a href="#"><i class="fa fa-heart"></i>Hentai</a>
+      <a href="#"><i class="fa fa-book"></i>Doujins</a>
+      <a href="#"><i class="fa fa-gamepad"></i>Juegos</a>
+      <a href="#"><i class="fa fa-ban"></i>DMCA</a>
+      <a href="#"><i class="fa fa-envelope"></i>Contacto</a>
+    </div>
+    <div id="mobileIconsBottom">
+      <a href="https://x.com/sitiosrtr" title="X/Twitter"><i class="fa fa-twitter"></i></a>
+        <a href="https://whatsapp.com/channel/0029Vb5iKDyIiRooDhF2Dj1J" title="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/AnimeRTRh" title="Facebook"><i class="fa fa-facebook"></i></a>
+        <a href="https://www.youtube.com/@animertroficial" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+        <a href="https://www.descargasrtr.com/p/donar.html" title="Donar"><i class="fa fa-paypal"></i></a>
+    </div>
+  </div>
+
+  <header class="header-wrapper">
+    <div class="header-container">
+      <!-- Botón Menú a la izquierda -->
+      <button class="menu-toggle" onclick="toggleMenu()">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <!-- Logo centrado -->
+      <div class="header-logo">
+        <a href="AnimeRTR-Inicio.html">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj6-_3_lEbEWVZYwCpS6JgScupikJFPRDPHwWzndGO1iWnvSD6kjJ9bOnQWFjNaVUsImoEP1TJ5aJbJSeRtgjzcGPyMOyso52poYVq-h1v_BBPZAIyUBsWTPPbGxsfYdhW6QEkTT-G_28uKI_o9Tr9_a9Sb_oZoI_lJhdBzpw8UJMry2LlvIY2denYPiNjj/s454/Dise%C3%B1o_sin_t%C3%ADtulo__11_-removebg-preview.png"
+            alt="AnimeRTR Logo" />
+        </a>
+      </div>
+
+      <!-- Menú PC -->
+      <nav class="header-nav">
+        <a href="#">Inicio</a>
+        <a href="#">Anime</a>
+        <a href="#">Hentai</a>
+        <a href="#">Doujins</a>
+        <a href="#">Rule34</a>
+        <a href="#">Erogames</a>
+        <a href="#">Peticiones</a>
+        <a href="#">Contacto</a>
+      </nav>
+
+      <!-- Redes sociales PC -->
+      <div class="header-social">
+        <a href="https://x.com/sitiosrtr" title="X/Twitter"><i class="fa fa-twitter"></i></a>
+        <a href="https://whatsapp.com/channel/0029Vb5iKDyIiRooDhF2Dj1J" title="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+        <a href="https://www.facebook.com/AnimeRTRh" title="Facebook"><i class="fa fa-facebook"></i></a>
+        <a href="https://www.youtube.com/@animertroficial" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+        <a href="https://www.descargasrtr.com/p/donar.html" title="Donar"><i class="fa fa-paypal"></i></a>
+      </div>
+
+      <!-- Icono búsqueda derecha -->
+      <a href="#" class="search-icon"><i class="fa fa-search"></i></a>
+    </div>
+
+
+  <!-- AQUI COMIENZA EL HTML NORMAL CON JS NORMAL -->
+
+<body>
+
+    <div class="barra-superior">
+    <div class="izquierda">
+      <i class="fa fa-tags"></i> Acción
+    </div>
+    <div class="derecha">
+      <button class="Generos" id="filterToggle">
+        <i class="fa fa-sliders"></i> GÉNEROS
+      </button>
+      <div class="contenido-acordeon" id="acordeonGeneros">
+        <a href="#">Acción</a>
+        <a href="#">Aventura</a>
+        <a href="#">Comedia</a>
+        <a href="#">Drama</a>
+        <a href="#">Fantasía</a>
+        <a href="#">Romance</a>
+        <a href="#">Ciencia Ficción</a>
+        <a href="#">Misterio</a>
+        <a href="#">Terror</a>
+        <a href="#">Slice of Life</a>
+        <a href="#">Deportes</a>
+        <a href="#">Histórico</a>
+        <a href="#">Psicológico</a>
+        <a href="#">Musical</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const boton = document.getElementById("filterToggle");
+      const acordeon = document.getElementById("acordeonGeneros");
+
+      boton.addEventListener("click", function (e) {
+        e.stopPropagation();
+        acordeon.style.display = acordeon.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!acordeon.contains(e.target) && e.target !== boton) {
+          acordeon.style.display = "none";
+        }
+      });
+    });
+  </script>
+ </header>
+    <div class="container" id="gallery">
+        <!-- Tarjetas generadas dinámicamente -->
+    </div>
 
 <h2 id="titulo">Resultados</h2>
 
@@ -19,5 +152,14 @@
 <div id="paginacion"></div>
 
 <script src="../catalogo.js"></script>
+
+<div style="height: 25px;"></div>
+
+
+<button id="scrollToTopBtn" title="Subir">
+  <i class="fa fa-arrow-up"></i>
+</button>
+
 </body>
+</div>
 </html>
