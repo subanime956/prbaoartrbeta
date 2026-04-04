@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Buscador</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #0f172a;
+  color: white;
+  margin: 0;
+  padding: 20px;
+}
+
+h1 {
+  text-align: center;
+}
+
+#search {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+#resultados {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+.card {
+  background: #1e293b;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: 0.3s;
+  text-align: center;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+
+.card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.card p {
+  padding: 10px;
+  font-size: 14px;
+}
+</style>
+
+</head>
+<body>
+
+<h1>🔍 Buscar Anime</h1>
+
+<input type="text" id="search" placeholder="Escribe el nombre...">
+
+<div id="resultados"></div>
+
+<script src="search.js"></script>
+
+</body>
+</html>
