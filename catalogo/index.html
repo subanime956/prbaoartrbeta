@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Catálogo</title>
+<style>
+body{background:#0f172a;color:white;font-family:Arial;padding:20px}
+h2{margin-bottom:20px}
+#resultados{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:15px}
+.card{background:#1e293b;border-radius:10px;overflow:hidden;transition:.3s}
+.card:hover{transform:scale(1.05)}
+.card img{width:100%;height:200px;object-fit:cover}
+.card p{padding:10px;font-size:14px}
+</style>
+</head>
+<body>
+
+<h2 id="titulo"></h2>
+<div id="resultados"></div>
+
+<script src="../catalogo.js"></script>
+</body>
+</html>
