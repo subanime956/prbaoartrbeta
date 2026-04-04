@@ -84,9 +84,10 @@
 
 
       <!-- Icono búsqueda derecha -->
-      <a href="/buscador.html" class="search-icon">
+      <a href="#" class="search-icon" onclick="buscar()">
   <i class="fa fa-search"></i>
 </a>
+      <input type="text" id="busqueda" placeholder="Buscar..." />
     </div>
 
 
@@ -239,7 +240,15 @@ function scrollToCard(title) {
         // Inicializar la galería
         displayCovers();
     </script>
+<script>
+function buscar(){
+  const valor = document.getElementById("busqueda").value.trim();
 
+  if(valor !== ""){
+    window.location.href = "/catalogo?search=" + encodeURIComponent(valor);
+  }
+}
+</script>
 
 <div style="height: 25px;"></div>
 
