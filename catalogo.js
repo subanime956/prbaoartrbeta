@@ -37,6 +37,7 @@ fetch('/data.json')
   paginaItems.forEach(item => {
     resultados.innerHTML += `
       <div class="card">
+       <span class="card-badge">${anime.estado}</span>
         <a href="${item.url}" style="color:white;text-decoration:none;">
           <img src="${item.imagen}">
           <p>${item.titulo}</p>
