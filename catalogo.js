@@ -55,8 +55,12 @@ fetch('/data.json')
 
   let pagHTML = "";
   for (let i = 1; i <= totalPaginas; i++) {
+  if(i === page){
+    pagHTML += `<a href="?${buildQuery(i)}" class="active">${i}</a>`;
+  } else {
     pagHTML += `<a href="?${buildQuery(i)}">${i}</a>`;
   }
+}
 
   document.getElementById("paginacion").innerHTML = pagHTML;
 
