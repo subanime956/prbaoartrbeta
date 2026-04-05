@@ -4,7 +4,7 @@ const search = params.get("search");
 const genres = params.getAll("genre");
 const page = parseInt(params.get("page")) || 1;
 
-const porPagina = 24;
+const porPagina = 6;
 
 const resultados = document.getElementById("resultados");
 
@@ -54,15 +54,55 @@ fetch('/data.json')
   const totalPaginas = Math.ceil(filtrados.length / porPagina);
 
   let pagHTML = "";
-  for (let i = 1; i <= totalPaginas; i++) {
+
+const maxVisible = 5; // 👈 cuántas páginas mostrar
+const totalPaginas = Math.ceil(filtrados.length / porPagina);
+
+// 🔥 botón anterior
+if(page > 1){
+  pagHTML += `<a href="?${buildQuery(page - 1)}">«</a>`;
+}
+
+// 🔥 rango dinámico
+let start = Math.max(1, page - Math.floor(maxVisible / 2));
+let end = start + maxVisible - 1;
+
+if(end > totalPaginas){
+  end = totalPaginas;
+  start = Math.max(1, end - maxVisible + 1);
+}
+
+// 🔥 primera + puntos
+if(start > 1){
+  pagHTML += `<a href="?${buildQuery(1)}">1</a>`;
+  if(start > 2){
+    pagHTML += `<span>...</span>`;
+  }
+}
+
+// 🔢 páginas visibles
+for(let i = start; i <= end; i++){
   if(i === page){
-    pagHTML += `<a href="?${buildQuery(i)}" class="active">${i}</a>`;
+    pagHTML += `<a class="active">${i}</a>`;
   } else {
     pagHTML += `<a href="?${buildQuery(i)}">${i}</a>`;
   }
 }
 
-  document.getElementById("paginacion").innerHTML = pagHTML;
+// 🔥 última + puntos
+if(end < totalPaginas){
+  if(end < totalPaginas - 1){
+    pagHTML += `<span>...</span>`;
+  }
+  pagHTML += `<a href="?${buildQuery(totalPaginas)}">${totalPaginas}</a>`;
+}
+
+// 🔥 botón siguiente
+if(page < totalPaginas){
+  pagHTML += `<a href="?${buildQuery(page + 1)}">»</a>`;
+}
+
+document.getElementById("paginacion").innerHTML = pagHTML;
 
 });
 
