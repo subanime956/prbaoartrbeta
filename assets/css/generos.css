@@ -170,34 +170,28 @@
       }
 #paginacion {
   display: flex;
-  justify-content: center;
   flex-wrap: wrap;
   margin-top: 20px;
 }
-
 #paginacion a {
-  margin: 5px;
-  color: #e2e8f0;
-  text-decoration: none;
-  background: #1e293b;
+  margin: 4px;
   padding: 6px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  transition: all 0.25s ease;
-  border: 1px solid transparent;
+  border-radius: 6px;
+  background: white;       /* 🔥 blanco normal */
+  color: #333;
+  text-decoration: none;
+  transition: 0.2s;
 }
 
-/* Hover bonito */
+/* 🔥 hover */
 #paginacion a:hover {
-  background: #334155;
-  transform: translateY(-2px);
+  background: #7c3aed;     /* morado */
+  color: white;
 }
 
-/* Página activa (morado) */
+/* 🔥 página activa */
 #paginacion a.active {
-  background: #7c3aed; /* morado */
+  background: #7c3aed;     /* mismo morado */
   color: white;
   font-weight: bold;
-  border: 1px solid #a78bfa;
-  box-shadow: 0 0 8px rgba(124, 58, 237, 0.5);
 }
