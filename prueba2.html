@@ -5,20 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notificaciones PRO</title>
 
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<!-- OneSignal -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script src="/assets/js/Onesignalpush.js" defer></script>
 
 <style>
-body{
-  margin:0;
-  font-family: Arial;
-}
+body{margin:0;font-family:Arial;}
 
-/* HEADER */
 .header{
   height:60px;
   background:#111;
@@ -41,40 +35,29 @@ body{
 .active{ color:#00d1ff; }
 .inactive{ color:#888; }
 
-/* MINI WARNING */
-#notifWarning{
+/* PANEL */
+#notifPanel{
   position:absolute;
   top:60px;
   right:10px;
-  width:250px;
+  width:260px;
   background:#222;
-  color:white;
   border-radius:10px;
-  padding:10px;
+  padding:12px;
   display:none;
   box-shadow:0 5px 15px rgba(0,0,0,0.3);
-  animation:fadeIn 0.2s ease;
 }
 
-#notifWarning img{
-  width:100%;
-  border-radius:6px;
-  margin-top:8px;
-  cursor:pointer;
-}
-
-#notifWarning .close{
+#notifPanel .close{
   position:absolute;
   top:5px;
   right:8px;
   cursor:pointer;
-  font-size:14px;
   color:#aaa;
 }
 
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(-5px);}
-  to{opacity:1; transform:translateY(0);}
+.onesignal-customlink-container{
+  margin-top:10px;
 }
 </style>
 </head>
@@ -88,25 +71,24 @@ body{
     <i class="fa fa-bell-slash" id="bellIcon"></i>
   </button>
 
-  <!-- MINI PANEL -->
-  <div id="notifWarning">
-    <span class="close" id="closeWarning">✖</span>
-    <p style="margin:5px 0;">🔕 Notificaciones bloqueadas</p>
-    <a href="https://media.onesignal.com/web-sdk/bell/edge-unblock.png" target="_blank">
-      <img src="https://media.onesignal.com/web-sdk/bell/edge-unblock.png">
-    </a>
-  </div>
+  <!-- PANEL -->
+  <div id="notifPanel">
+    <span class="close" id="closePanel">✖</span>
+    <p style="margin:5px 0;">🔔 Gestionar notificaciones</p>
 
+    <!-- BOTÓN REAL -->
+    <div class="onesignal-customlink-container"></div>
+  </div>
 </div>
 
 <script>
 const btn = document.getElementById("notifToggle");
 const icon = document.getElementById("bellIcon");
+const panel = document.getElementById("notifPanel");
+const closeBtn = document.getElementById("closePanel");
 
-let isSubscribed = false;
-
-function updateUI() {
-  if (isSubscribed) {
+function updateUI(state){
+  if(state){
     icon.className = "fa fa-bell";
     btn.classList.add("active");
     btn.classList.remove("inactive");
@@ -119,28 +101,26 @@ function updateUI() {
 
 window.OneSignalDeferred = window.OneSignalDeferred || [];
 
-OneSignalDeferred.push(async function(OneSignal) {
+OneSignalDeferred.push(function(OneSignal){
 
-  // 🔥 ESPERA REAL DEL ESTADO (IMPORTANTE)
-  await OneSignal.Notifications.permission;
+  // 🔥 estado inicial instantáneo
+  updateUI(Notification.permission === "granted");
 
-  // 🔎 estado REAL después de cargar todo
-  isSubscribed = OneSignal.User.PushSubscription.optedIn;
+  // 🔥 sync real
+  setTimeout(() => {
+    updateUI(OneSignal.User.PushSubscription.optedIn);
+  }, 300);
 
-  updateUI();
+  // 🔔 abrir panel
+  btn.onclick = () => {
+    panel.style.display = panel.style.display === "block" ? "none" : "block";
+  };
 
-  // 🔁 toggle click
-  btn.addEventListener("click", async function() {
+  closeBtn.onclick = () => panel.style.display = "none";
 
-    if (OneSignal.User.PushSubscription.optedIn) {
-      await OneSignal.User.PushSubscription.optOut();
-      isSubscribed = false;
-    } else {
-      await OneSignal.User.PushSubscription.optIn();
-      isSubscribed = true;
-    }
-
-    updateUI();
+  // 🔥 detectar cambios reales (CLAVE)
+  OneSignal.User.PushSubscription.addEventListener("change", (e) => {
+    updateUI(e.current.optedIn);
   });
 
 });
