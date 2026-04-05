@@ -181,6 +181,7 @@
   color: #333;
   text-decoration: none;
   transition: 0.2s;
+  border: 1px solid black; /* 🔥 borde negro */
 }
 
 /* 🔥 hover */
