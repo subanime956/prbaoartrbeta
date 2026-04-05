@@ -73,42 +73,39 @@
 </div>
 
 <script>
-let isSubscribed = false;
-
 const btn = document.getElementById("notifToggle");
 const icon = document.getElementById("bellIcon");
+
+let isSubscribed = false;
 
 function updateUI() {
   if (isSubscribed) {
     icon.className = "fa fa-bell";
-    btn.classList.remove("inactive");
     btn.classList.add("active");
+    btn.classList.remove("inactive");
   } else {
     icon.className = "fa fa-bell-slash";
-    btn.classList.remove("active");
     btn.classList.add("inactive");
+    btn.classList.remove("active");
   }
 }
 
-/* Esperar a OneSignal */
 window.OneSignalDeferred = window.OneSignalDeferred || [];
 
-OneSignalDeferred.push(function(OneSignal) {
+OneSignalDeferred.push(async function(OneSignal) {
 
-  /* 🔎 estado real */
-  OneSignal.isPushNotificationsEnabled(function(enabled) {
-    isSubscribed = enabled;
-    updateUI();
-  });
+  // 🔎 estado real (v16)
+  isSubscribed = OneSignal.User.PushSubscription.optedIn;
+  updateUI();
 
-  /* 🔁 toggle click */
-  btn.addEventListener("click", function() {
+  // 🔁 click toggle
+  btn.addEventListener("click", async function() {
 
-    if (isSubscribed) {
-      OneSignal.setSubscription(false);
+    if (OneSignal.User.PushSubscription.optedIn) {
+      await OneSignal.User.PushSubscription.optOut();
       isSubscribed = false;
     } else {
-      OneSignal.showNativePrompt();
+      await OneSignal.User.PushSubscription.optIn();
       isSubscribed = true;
     }
 
