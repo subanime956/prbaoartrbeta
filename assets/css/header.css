@@ -74,32 +74,6 @@
   margin: 0 auto;
 }
 
-.header-nav {
-  display: flex;
-  gap: 24px;
-  flex-wrap: nowrap;
-  justify-content: flex-start;
-  flex-grow: 1;
-  flex-shrink: 1;
-  min-width: 0;
-  margin-left: 16px;
-}
-
-.header-nav a {
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  font-size: 14px;
-  padding: 6px 0;
-  transition: color 0.3s ease;
-  text-align: left;
-}
-
-.header-nav a:hover {
-  color: #775cdc;
-  text-shadow: 0 0 1px #775cdc, 0 0 4px rgba(0, 0, 0, 0.6);
-}
-
 .search-icon {
   align-self: flex-start;
   font-size: 18px;
@@ -112,23 +86,6 @@
 }
 
 .search-icon:hover {
-  color: #775cdc;
-}
-
-.header-social {
-  display: flex;
-  gap: 18px;
-  align-items: center;
-  flex-shrink: 0;
-}
-
-.header-social a {
-  color: white;
-  font-size: 18px;
-  transition: color 0.3s ease;
-}
-
-.header-social a:hover {
   color: #775cdc;
 }
 
