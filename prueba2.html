@@ -5,14 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notificaciones PRO</title>
 
+<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<!-- OneSignal -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script src="/assets/js/Onesignalpush.js" defer></script>
 
 <style>
-body{margin:0;font-family:Arial;}
+body{
+  margin:0;
+  font-family: Arial;
+}
 
+/* HEADER */
 .header{
   height:60px;
   background:#111;
@@ -35,29 +41,63 @@ body{margin:0;font-family:Arial;}
 .active{ color:#00d1ff; }
 .inactive{ color:#888; }
 
-/* PANEL */
-#notifPanel{
+/* MINI WARNING */
+#notifWarning{
   position:absolute;
   top:60px;
   right:10px;
-  width:260px;
+  width:250px;
   background:#222;
+  color:white;
   border-radius:10px;
-  padding:12px;
+  padding:10px;
   display:none;
   box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  animation:fadeIn 0.2s ease;
 }
 
-#notifPanel .close{
+#notifWarning img{
+  width:100%;
+  border-radius:6px;
+  margin-top:8px;
+  cursor:pointer;
+}
+
+#notifWarning .close{
   position:absolute;
   top:5px;
   right:8px;
   cursor:pointer;
+  font-size:14px;
   color:#aaa;
 }
 
-.onesignal-customlink-container{
-  margin-top:10px;
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(-5px);}
+  to{opacity:1; transform:translateY(0);}
+}
+
+/* TOAST */
+#notifToast{
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: #fff;
+  color: #111;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 9999;
+}
+
+#notifToast.show{
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
 }
 </style>
 </head>
@@ -66,26 +106,39 @@ body{margin:0;font-family:Arial;}
 
 <div class="header">
   <div>MiWeb</div>
-<div class="onesignal-customlink-container"></div>
+
   <button id="notifToggle" class="inactive">
     <i class="fa fa-bell-slash" id="bellIcon"></i>
   </button>
 
-  <!-- PANEL -->
-  <div id="notifPanel">
-    <span class="close" id="closePanel">✖</span>
-    <p style="margin:5px 0;">🔔 Gestionar notificaciones</p>
-
-    <!-- BOTÓN REAL -->
-    <div class="onesignal-customlink-container"></div>
+  <!-- MINI PANEL -->
+  <div id="notifWarning">
+    <span class="close" id="closeWarning">✖</span>
+    <p style="margin:5px 0;">🔕 Notificaciones bloqueadas</p>
+    <a href="https://media.onesignal.com/web-sdk/bell/edge-unblock.png" target="_blank">
+      <img src="https://media.onesignal.com/web-sdk/bell/edge-unblock.png">
+    </a>
   </div>
 </div>
+
+<!-- TOAST -->
+<div id="notifToast"></div>
 
 <script>
 const btn = document.getElementById("notifToggle");
 const icon = document.getElementById("bellIcon");
-const panel = document.getElementById("notifPanel");
-const closeBtn = document.getElementById("closePanel");
+const warning = document.getElementById("notifWarning");
+const closeBtn = document.getElementById("closeWarning");
+const toast = document.getElementById("notifToast");
+
+// ⚡ UI INMEDIATA
+if (Notification.permission === "granted") {
+  icon.className = "fa fa-bell";
+  btn.classList.add("active");
+} else {
+  icon.className = "fa fa-bell-slash";
+  btn.classList.add("inactive");
+}
 
 function updateUI(state){
   if(state){
@@ -99,29 +152,56 @@ function updateUI(state){
   }
 }
 
+function showToast(text){
+  toast.textContent = text;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 2000);
+}
+
 window.OneSignalDeferred = window.OneSignalDeferred || [];
 
-OneSignalDeferred.push(function(OneSignal){
+OneSignalDeferred.push(async function(OneSignal){
 
-  // 🔥 estado inicial instantáneo
-  updateUI(Notification.permission === "granted");
-
-  // 🔥 sync real
-  setTimeout(() => {
+  function sync(){
     updateUI(OneSignal.User.PushSubscription.optedIn);
-  }, 300);
+  }
 
-  // 🔔 abrir panel
-  btn.onclick = () => {
-    panel.style.display = panel.style.display === "block" ? "none" : "block";
-  };
+  setTimeout(sync, 100);
 
-  closeBtn.onclick = () => panel.style.display = "none";
+  btn.addEventListener("click", async function(){
 
-  // 🔥 detectar cambios reales (CLAVE)
-  OneSignal.User.PushSubscription.addEventListener("change", (e) => {
-    updateUI(e.current.optedIn);
+    const permission = Notification.permission;
+
+    // 🚫 BLOQUEADO
+    if(permission === "denied"){
+      warning.style.display = "block";
+      return;
+    }
+
+    const opted = OneSignal.User.PushSubscription.optedIn;
+
+    if(opted){
+      await OneSignal.User.PushSubscription.optOut();
+      updateUI(false);
+      showToast("🔕 Desactivaste las notificaciones");
+
+    } else {
+
+      if(permission === "default"){
+        await OneSignal.Notifications.requestPermission();
+      } else {
+        await OneSignal.User.PushSubscription.optIn();
+      }
+
+      updateUI(true);
+      showToast("🔔 Activaste las notificaciones");
+    }
   });
+
+  closeBtn.onclick = () => warning.style.display = "none";
 
 });
 </script>
