@@ -105,12 +105,21 @@ const icon = document.getElementById("bellIcon");
 const warning = document.getElementById("notifWarning");
 const closeBtn = document.getElementById("closeWarning");
 
+// ⚡ UI INMEDIATA (sin delay)
+if (Notification.permission === "granted") {
+  icon.className = "fa fa-bell";
+  btn.classList.add("active");
+} else {
+  icon.className = "fa fa-bell-slash";
+  btn.classList.add("inactive");
+}
+
 function updateUI(state){
   if(state){
     icon.className = "fa fa-bell";
     btn.classList.add("active");
     btn.classList.remove("inactive");
-  }else{
+  } else {
     icon.className = "fa fa-bell-slash";
     btn.classList.add("inactive");
     btn.classList.remove("active");
@@ -125,38 +134,36 @@ OneSignalDeferred.push(async function(OneSignal){
     updateUI(OneSignal.User.PushSubscription.optedIn);
   }
 
-  sync();
-  setTimeout(sync, 300);
+  // 🔄 sync real sin afectar UI inicial
+  setTimeout(sync, 100);
 
   btn.addEventListener("click", async function(){
 
-  const permission = Notification.permission;
-  const opted = OneSignal.User.PushSubscription.optedIn;
+    const permission = Notification.permission;
 
-  // 🚫 BLOQUEADO
-  if(permission === "denied"){
-    warning.style.display = "block";
-    return;
-  }
-
-  if(opted){
-    // 🔕 DESUSCRIBIR
-    await OneSignal.User.PushSubscription.optOut();
-
-  } else {
-
-    if(permission === "granted"){
-      // 🔥 YA TIENE PERMISO → SUSCRIBIR DIRECTO
-      await OneSignal.User.PushSubscription.optIn();
-
-    } else {
-      // 🔔 PEDIR PERMISO
-      await OneSignal.Notifications.requestPermission();
+    // 🚫 BLOQUEADO
+    if(permission === "denied"){
+      warning.style.display = "block";
+      return;
     }
-  }
 
-  setTimeout(sync, 200);
-});
+    const opted = OneSignal.User.PushSubscription.optedIn;
+
+    if(opted){
+      await OneSignal.User.PushSubscription.optOut();
+      updateUI(false);
+    } else {
+
+      if(permission === "default"){
+        // 🔥 ESTO DISPARA EL WELCOME
+        await OneSignal.Notifications.requestPermission();
+      } else {
+        await OneSignal.User.PushSubscription.optIn();
+      }
+
+      updateUI(true);
+    }
+  });
 
   closeBtn.onclick = () => warning.style.display = "none";
 
