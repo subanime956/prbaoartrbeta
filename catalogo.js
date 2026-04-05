@@ -97,7 +97,7 @@ if(end < totalPaginas){
   pagHTML += `<a href="?${buildQuery(totalPaginas)}">${totalPaginas}</a>`;
 }
 
-// 🔥 botón siguiente
+// 🔥 botón siguient
 if(page < totalPaginas){
   pagHTML += `<a href="?${buildQuery(page + 1)}">»</a>`;
 }
