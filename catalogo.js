@@ -4,7 +4,7 @@ const search = params.get("search");
 const genres = params.getAll("genre");
 const page = parseInt(params.get("page")) || 1;
 
-const porPagina = 6;
+const porPagina = 24;
 
 const resultados = document.getElementById("resultados");
 
