@@ -101,38 +101,6 @@
 /* 📱 MÓVIL */
 @media (max-width: 1000px) {
 
-  .header-container {
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0px 15px;
-    gap: 12px;
-  }
-
-  .menu-toggle {
-    position: absolute;
-    left: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .header-logo {
-    text-align: center;
-    margin: 10px 0;
-  }
-
-  .search-icon {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-
-  .header-nav,
-  .header-social {
-    display: none;
-  }
-
   #mobileMenu {
     position: fixed;
     top: 0;
@@ -219,13 +187,5 @@
 
   #menuOverlay.active {
     display: block;
-  }
-}
-
-/* 💻 PC */
-@media (min-width: 1001px) {
-  #mobileMenu,
-  #menuOverlay {
-    display: none !important;
   }
 }
