@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Notificaciones Test</title>
+<title>Notificaciones PRO</title>
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,98 +13,104 @@
 <script src="/assets/js/Onesignalpush.js" defer></script>
 
 <style>
-  body{
-    margin:0;
-    font-family: Arial, sans-serif;
-    background:#f4f4f4;
-  }
+body{
+  margin:0;
+  font-family: Arial;
+}
 
-  /* HEADER */
-  .header{
-    width:100%;
-    height:60px;
-    background:#111;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 15px;
-  }
+/* HEADER */
+.header{
+  height:60px;
+  background:#111;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 15px;
+  color:white;
+  position:relative;
+}
 
-  .logo{
-    font-weight:bold;
-  }
+#notifToggle{
+  font-size:22px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  color:white;
+}
 
-  /* BOTÓN */
-  #notifToggle{
-    font-size:22px;
-    background:none;
-    border:none;
-    cursor:pointer;
-    color:white;
-    transition:0.2s;
-  }
+.active{ color:#00d1ff; }
+.inactive{ color:#888; }
 
-  #notifToggle:hover{
-    transform:scale(1.1);
-  }
+/* MINI WARNING */
+#notifWarning{
+  position:absolute;
+  top:60px;
+  right:10px;
+  width:250px;
+  background:#222;
+  color:white;
+  border-radius:10px;
+  padding:10px;
+  display:none;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  animation:fadeIn 0.2s ease;
+}
 
-  .active{
-    color:#00d1ff;
-  }
+#notifWarning img{
+  width:100%;
+  border-radius:6px;
+  margin-top:8px;
+  cursor:pointer;
+}
 
-  .inactive{
-    color:#888;
-  }
+#notifWarning .close{
+  position:absolute;
+  top:5px;
+  right:8px;
+  cursor:pointer;
+  font-size:14px;
+  color:#aaa;
+}
 
-  /* WARNING */
-  #notifWarning{
-    display:none;
-    background:#222;
-    color:white;
-    text-align:center;
-    padding:15px;
-  }
-
-  #notifWarning img{
-    max-width:220px;
-    border-radius:10px;
-    margin-top:10px;
-    cursor:pointer;
-  }
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(-5px);}
+  to{opacity:1; transform:translateY(0);}
+}
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
-  <div class="logo">MiWeb</div>
+  <div>MiWeb</div>
 
   <button id="notifToggle" class="inactive">
     <i class="fa fa-bell-slash" id="bellIcon"></i>
   </button>
-</div>
 
-<!-- WARNING (solo aparece si está bloqueado y hacen click) -->
-<div id="notifWarning">
-  <p>🔕 Tienes las notificaciones bloqueadas</p>
-  <a href="https://media.onesignal.com/web-sdk/bell/edge-unblock.png" target="_blank">
-    <img src="https://media.onesignal.com/web-sdk/bell/edge-unblock.png">
-  </a>
+  <!-- MINI PANEL -->
+  <div id="notifWarning">
+    <span class="close" id="closeWarning">✖</span>
+    <p style="margin:5px 0;">🔕 Notificaciones bloqueadas</p>
+    <a href="https://media.onesignal.com/web-sdk/bell/edge-unblock.png" target="_blank">
+      <img src="https://media.onesignal.com/web-sdk/bell/edge-unblock.png">
+    </a>
+  </div>
+
 </div>
 
 <script>
 const btn = document.getElementById("notifToggle");
 const icon = document.getElementById("bellIcon");
 const warning = document.getElementById("notifWarning");
+const closeBtn = document.getElementById("closeWarning");
 
-function updateUI(state) {
-  if (state) {
+function updateUI(state){
+  if(state){
     icon.className = "fa fa-bell";
     btn.classList.add("active");
     btn.classList.remove("inactive");
-  } else {
+  }else{
     icon.className = "fa fa-bell-slash";
     btn.classList.add("inactive");
     btn.classList.remove("active");
@@ -113,39 +119,38 @@ function updateUI(state) {
 
 window.OneSignalDeferred = window.OneSignalDeferred || [];
 
-OneSignalDeferred.push(function(OneSignal) {
+OneSignalDeferred.push(async function(OneSignal){
 
-  function syncState() {
-    const opted = OneSignal.User.PushSubscription.optedIn;
-    updateUI(opted);
+  function sync(){
+    updateUI(OneSignal.User.PushSubscription.optedIn);
   }
 
-  // 🔥 estado inicial rápido
-  syncState();
-  setTimeout(syncState, 300);
+  sync();
+  setTimeout(sync, 300);
 
-  // 🔁 CLICK
-  btn.addEventListener("click", async function() {
+  btn.addEventListener("click", async function(){
 
-    const perm = Notification.permission;
+    const permission = Notification.permission;
 
-    // 🚫 SOLO AQUÍ detecta bloqueo
-    if (perm === "denied") {
+    // 🚫 BLOQUEADO → mostrar mini panel
+    if(permission === "denied"){
       warning.style.display = "block";
       return;
     }
 
     const opted = OneSignal.User.PushSubscription.optedIn;
 
-    if (opted) {
+    if(opted){
       await OneSignal.User.PushSubscription.optOut();
-    } else {
-      await OneSignal.showNativePrompt();
+    }else{
+      // 🔥 ESTA ES LA CLAVE QUE TE FALTABA
+      await OneSignal.Notifications.requestPermission();
     }
 
-    // ⚡ actualización rápida
-    setTimeout(syncState, 200);
+    setTimeout(sync, 200);
   });
+
+  closeBtn.onclick = () => warning.style.display = "none";
 
 });
 </script>
