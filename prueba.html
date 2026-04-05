@@ -94,11 +94,15 @@ window.OneSignalDeferred = window.OneSignalDeferred || [];
 
 OneSignalDeferred.push(async function(OneSignal) {
 
-  // 🔎 estado real (v16)
+  // 🔥 ESPERA REAL DEL ESTADO (IMPORTANTE)
+  await OneSignal.Notifications.permission;
+
+  // 🔎 estado REAL después de cargar todo
   isSubscribed = OneSignal.User.PushSubscription.optedIn;
+
   updateUI();
 
-  // 🔁 click toggle
+  // 🔁 toggle click
   btn.addEventListener("click", async function() {
 
     if (OneSignal.User.PushSubscription.optedIn) {
