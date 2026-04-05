@@ -130,25 +130,33 @@ OneSignalDeferred.push(async function(OneSignal){
 
   btn.addEventListener("click", async function(){
 
-    const permission = Notification.permission;
+  const permission = Notification.permission;
+  const opted = OneSignal.User.PushSubscription.optedIn;
 
-    // 🚫 BLOQUEADO → mostrar mini panel
-    if(permission === "denied"){
-      warning.style.display = "block";
-      return;
-    }
+  // 🚫 BLOQUEADO
+  if(permission === "denied"){
+    warning.style.display = "block";
+    return;
+  }
 
-    const opted = OneSignal.User.PushSubscription.optedIn;
+  if(opted){
+    // 🔕 DESUSCRIBIR
+    await OneSignal.User.PushSubscription.optOut();
 
-    if(opted){
-      await OneSignal.User.PushSubscription.optOut();
-    }else{
-      // 🔥 ESTA ES LA CLAVE QUE TE FALTABA
+  } else {
+
+    if(permission === "granted"){
+      // 🔥 YA TIENE PERMISO → SUSCRIBIR DIRECTO
+      await OneSignal.User.PushSubscription.optIn();
+
+    } else {
+      // 🔔 PEDIR PERMISO
       await OneSignal.Notifications.requestPermission();
     }
+  }
 
-    setTimeout(sync, 200);
-  });
+  setTimeout(sync, 200);
+});
 
   closeBtn.onclick = () => warning.style.display = "none";
 
