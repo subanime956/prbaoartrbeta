@@ -1,4 +1,11 @@
 [
+  {
+  "titulo": "Date A Live",
+  "url": "/ver/date",
+  "imagen": "https://m.animertr.com/assets/img/Anime-C.webp",
+  "genero": "romance",
+  "badge": "HD"
+},
   {"titulo":"Date A Live 1","url":"/ver/date1","imagen":"https://m.animertr.com/assets/img/Anime-C.webp","genero":"romance","badge":"Categoría"},
   {"titulo":"Date A Live 1","url":"/ver/date1","imagen":"https://m.animertr.com/assets/img/Hentai-C.webp","genero":"romance"},
   {"titulo":"Date A Live 1","url":"/ver/date1","imagen":"https://m.animertr.com/assets/img/Doujins-C.webp","genero":"romance"},
