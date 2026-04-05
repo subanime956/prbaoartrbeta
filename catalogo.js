@@ -14,12 +14,16 @@ fetch('/data.json')
 
   let filtrados = data;
 
+  // 🔍 búsqueda (titulo + keywords opcional)
   if (search) {
-    filtrados = filtrados.filter(item =>
-      item.titulo.toLowerCase().includes(search.toLowerCase())
-    );
+    filtrados = filtrados.filter(item => {
+      const titulo = item.titulo.toLowerCase();
+      const keywords = item.keywords ? item.keywords.toLowerCase() : "";
+      return titulo.includes(search.toLowerCase()) || keywords.includes(search.toLowerCase());
+    });
   }
 
+  // 🎭 filtros por género
   if (genres.length > 0) {
     filtrados = filtrados.filter(item => {
       if (!item.genero) return false;
@@ -28,79 +32,89 @@ fetch('/data.json')
     });
   }
 
+  // 📄 paginación lógica
   const inicio = (page - 1) * porPagina;
   const fin = inicio + porPagina;
   const paginaItems = filtrados.slice(inicio, fin);
 
-  resultados.innerHTML = ""; 
+  resultados.innerHTML = "";
 
+  // 🖼️ render cards
   paginaItems.forEach(item => {
-  resultados.innerHTML += `
-    <a class="card" href="${item.url}">
-      
-      <div style="position: relative;">
-        ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ""}
-        <img src="${item.imagen}" alt="${item.titulo}" style="width: 100%;">
-      </div>
+    resultados.innerHTML += `
+      <a class="card" href="${item.url}">
+        
+        <div style="position: relative;">
+          ${item.badge ? `<span class="card-badge">${item.badge}</span>` : ""}
+          <img src="${item.imagen}" alt="${item.titulo}" style="width: 100%;">
+        </div>
 
-      <div class="card-content">
-        <h3>${item.titulo}</h3>
-      </div>
+        <div class="card-content">
+          <h3>${item.titulo}</h3>
+        </div>
 
-    </a>
-  `;
-});
+      </a>
+    `;
+  });
 
- let pagHTML = "";
+  // 📊 total páginas
+  const totalPaginas = Math.ceil(filtrados.length / porPagina);
 
-const maxVisible = 5;
-const totalPaginas = Math.ceil(filtrados.length / porPagina);
-
-// 🔥 botón anterior
-if(page > 1){
-  pagHTML += `<a href="?${buildQuery(page - 1)}">«</a>`;
-}
-
-// 🔥 rango dinámico
-let start = Math.max(1, page - Math.floor(maxVisible / 2));
-let end = start + maxVisible - 1;
-
-if(end > totalPaginas){
-  end = totalPaginas;
-  start = Math.max(1, end - maxVisible + 1);
-}
-
-// 🔥 primera + puntos
-if(start > 1){
-  pagHTML += `<a href="?${buildQuery(1)}">1</a>`;
-  if(start > 2){
-    pagHTML += `<span>...</span>`;
-  }
-}
-
-// 🔢 páginas visibles
-for(let i = start; i <= end; i++){
-  if(i === page){
-    pagHTML += `<a class="active">${i}</a>`;
+  // 🔥 ocultar paginación si no es necesaria
+  if(totalPaginas <= 1){
+    document.getElementById("paginacion").innerHTML = "";
   } else {
-    pagHTML += `<a href="?${buildQuery(i)}">${i}</a>`;
+
+    let pagHTML = "";
+    const maxVisible = 5;
+
+    // 🔥 botón anterior
+    if(page > 1){
+      pagHTML += `<a href="?${buildQuery(page - 1)}">«</a>`;
+    }
+
+    // 🔥 rango dinámico
+    let start = Math.max(1, page - Math.floor(maxVisible / 2));
+    let end = start + maxVisible - 1;
+
+    if(end > totalPaginas){
+      end = totalPaginas;
+      start = Math.max(1, end - maxVisible + 1);
+    }
+
+    // 🔥 primera + puntos
+    if(start > 1){
+      pagHTML += `<a href="?${buildQuery(1)}">1</a>`;
+      if(start > 2){
+        pagHTML += `<span>...</span>`;
+      }
+    }
+
+    // 🔢 páginas visibles
+    for(let i = start; i <= end; i++){
+      if(i === page){
+        pagHTML += `<a href="?${buildQuery(i)}" class="active">${i}</a>`;
+      } else {
+        pagHTML += `<a href="?${buildQuery(i)}">${i}</a>`;
+      }
+    }
+
+    // 🔥 última + puntos
+    if(end < totalPaginas){
+      if(end < totalPaginas - 1){
+        pagHTML += `<span>...</span>`;
+      }
+      pagHTML += `<a href="?${buildQuery(totalPaginas)}">${totalPaginas}</a>`;
+    }
+
+    // 🔥 botón siguiente
+    if(page < totalPaginas){
+      pagHTML += `<a href="?${buildQuery(page + 1)}">»</a>`;
+    }
+
+    document.getElementById("paginacion").innerHTML = pagHTML;
   }
-}
 
-// 🔥 última + puntos
-if(end < totalPaginas){
-  if(end < totalPaginas - 1){
-    pagHTML += `<span>...</span>`;
-  }
-  pagHTML += `<a href="?${buildQuery(totalPaginas)}">${totalPaginas}</a>`;
-}
-
-// 🔥 botón siguiente
-if(page < totalPaginas){
-  pagHTML += `<a href="?${buildQuery(page + 1)}">»</a>`;
-}
-
-document.getElementById("paginacion").innerHTML = pagHTML;
 });
 
 function buildQuery(pageNum){
