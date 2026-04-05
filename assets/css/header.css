@@ -241,7 +241,3 @@ html, body {
   color: white;
   font-size: 18px;
 }
-#onesignal-bell-container,
-.onesignal-bell-launcher {
-  z-index: 1900 !important;
-}
