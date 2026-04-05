@@ -82,6 +82,41 @@
   <!-- AQUI COMIENZA EL HTML NORMAL CON JS NORMAL -->
 
 <body>
+  <!-- ====== ZOOM WIDGET ====== -->
+<div data-open='0' id='zoomWidget'>
+
+  <!-- PANEL PRIMERO (para que visualmente esté arriba del botón) -->
+  <div aria-label='Controles de zoom' id='zoomPanel' role='region'>
+    <div class='zw-row'>
+      <button aria-label='Alejar' class='zw-btn' id='zOut' title='Alejar' type='button'>&#8722;</button>
+      <div class='zw-pill' id='zoom-readout'>90%</div>
+      <button aria-label='Acercar' class='zw-btn' id='zIn' title='Acercar' type='button'>+</button>
+      <button aria-label='Reset 90%' class='zw-btn' id='zReset' title='Reset 90%' type='button'>&#8634;</button>
+    </div>
+
+    <div class='zw-hint'>
+      Predeterminado: <b>90%</b>. Se recuerda automáticamente.
+    </div>
+  </div>
+
+  <!-- BOTÓN ABAJO -->
+<button aria-label='Abrir controles de zoom' id='zoomToggle' type='button'>
+  <!-- Icono LUPA + (Zoom) -->
+  <svg aria-hidden='true' class='zw-icon' fill='none' viewBox='0 0 24 24'>
+    <path d='M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z' opacity='.95' stroke='white' stroke-width='2'/>
+    <path d='M16.2 16.2 21 21' opacity='.95' stroke='white' stroke-linecap='round' stroke-width='2'/>
+    <path d='M10.5 7.5v6' stroke='white' stroke-linecap='round' stroke-width='2'/>
+    <path d='M7.5 10.5h6' stroke='white' stroke-linecap='round' stroke-width='2'/>
+  </svg>
+
+  <span class='zw-label'>Zoom</span>
+
+  <!-- Flechita -->
+  <svg aria-hidden='true' class='zw-caret' fill='none' viewBox='0 0 24 24'>
+    <path d='M6 9l6 6 6-6' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/>
+  </svg>
+</button>
+</div>
 <!-- JS Script Configuracion -->
   <script src="/assets/js/header.js"></script>
   <script src="/assets/js/subir.js" defer></script>
@@ -170,44 +205,7 @@
 <button id="scrollToTopBtn" title="Subir">
   <i class="fa fa-arrow-up"></i>
 </button>
-
-  
-<!-- ====== ZOOM WIDGET ====== -->
-<div data-open='0' id='zoomWidget'>
-
-  <!-- PANEL PRIMERO (para que visualmente esté arriba del botón) -->
-  <div aria-label='Controles de zoom' id='zoomPanel' role='region'>
-    <div class='zw-row'>
-      <button aria-label='Alejar' class='zw-btn' id='zOut' title='Alejar' type='button'>&#8722;</button>
-      <div class='zw-pill' id='zoom-readout'>90%</div>
-      <button aria-label='Acercar' class='zw-btn' id='zIn' title='Acercar' type='button'>+</button>
-      <button aria-label='Reset 90%' class='zw-btn' id='zReset' title='Reset 90%' type='button'>&#8634;</button>
-    </div>
-
-    <div class='zw-hint'>
-      Predeterminado: <b>90%</b>. Se recuerda automáticamente.
-    </div>
-  </div>
-
-  <!-- BOTÓN ABAJO -->
-<button aria-label='Abrir controles de zoom' id='zoomToggle' type='button'>
-  <!-- Icono LUPA + (Zoom) -->
-  <svg aria-hidden='true' class='zw-icon' fill='none' viewBox='0 0 24 24'>
-    <path d='M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z' opacity='.95' stroke='white' stroke-width='2'/>
-    <path d='M16.2 16.2 21 21' opacity='.95' stroke='white' stroke-linecap='round' stroke-width='2'/>
-    <path d='M10.5 7.5v6' stroke='white' stroke-linecap='round' stroke-width='2'/>
-    <path d='M7.5 10.5h6' stroke='white' stroke-linecap='round' stroke-width='2'/>
-  </svg>
-
-  <span class='zw-label'>Zoom</span>
-
-  <!-- Flechita -->
-  <svg aria-hidden='true' class='zw-caret' fill='none' viewBox='0 0 24 24'>
-    <path d='M6 9l6 6 6-6' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/>
-  </svg>
-</button>
-</div>
-
+ 
 
 </body>
 </div>
