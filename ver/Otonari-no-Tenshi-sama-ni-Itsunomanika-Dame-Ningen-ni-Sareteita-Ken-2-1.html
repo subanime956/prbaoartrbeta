@@ -7,7 +7,6 @@
 <link rel="icon" href="https://m.animertr.com/assets/img/favicon.ico" type="image/x-icon">
 
 <meta property="og:type" content="website">
-
 <meta content='Episodio 1' property='og:title'/>
 <meta content='https://m.animertr.com/ver/Otonari-no-Tenshi-sama-ni-Itsunomanika-Dame-Ningen-ni-Sareteita-Ken-2-1' property='og:url'/>
 <meta content='article' property='og:type'/>
@@ -21,6 +20,8 @@
 <meta content='USARIO-TWITTER' name='twitter:site'/>
 <meta content='USARIO-TWITTER' name='twitter:creator'/>
 <meta content='summary_large_image' name='twitter:card'/>
+
+  
 <!-- CSS Style Configuracion -->
   <link rel="stylesheet" href="/assets/css/header.css">
   <link rel="stylesheet" href="/assets/css/episodio.css">
@@ -34,76 +35,70 @@
 
 </head>
 
-<body>
+<header class="header">
+  <div class="header-container">
+<!-- LOGO IZQUIERDA -->
+<div class="logo">
+  <a href="/">
+    <img src="https://m.animertr.com/assets/img/AnimeRTR.webp">
+  </a>
+</div>
 
+<!-- DERECHA -->
+<div class="actions">
+  <button class="icon-btn" onclick="abrirBusqueda()">
+    <i class="fa fa-search"></i>
+  </button>
+
+  <button class="icon-btn" onclick="toggleMenu()">
+    <i class="fa fa-bars"></i>
+  </button>
+</div>
+  </div>
+
+<div id="searchBar">
+  <input type="text" id="searchInput" placeholder="Buscar anime..." />
+  <button onclick="cerrarBusqueda()">
+    <i class="fa fa-times"></i>
+  </button>
+</div>
+
+
+<!-- OVERLAY -->
+
+<div id="overlay" onclick="toggleMenu()"></div>
+
+<!-- MENÚ -->
+
+<div id="menu">
+
+  <div class="menu-links">
+      <a href="#"><i class="fa fa-home"></i>Inicio</a>
+      <a href="#"><i class="fa fa-play-circle"></i>Anime</a>
+      <a href="#"><i class="fa fa-heart"></i>Hentai</a>
+      <a href="#"><i class="fa fa-book"></i>Doujins</a>
+      <a href="#"><i class="fa fa-fire"></i>Rule34</a>
+      <a href="#"><i class="fa fa-gamepad"></i>Juegos</a>
+      <a href="#"><i class="fa fa-ban"></i>DMCA</a>
+      <a href="#"><i class="fa fa-envelope"></i>Contacto</a>
+    </div>
+
+  <div class="menu-social">
+    <a href="https://x.com/sitiosrtr" title="X/Twitter"><i class="fa fa-twitter"></i></a>
+    <a href="https://whatsapp.com/channel/0029Vb5iKDyIiRooDhF2Dj1J" title="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+    <a href="https://www.facebook.com/AnimeRTRh" title="Facebook"><i class="fa fa-facebook"></i></a>
+    <a href="https://www.youtube.com/@animertroficial" title="YouTube"><i class="fa fa-youtube-play"></i></a>
+    <a href="https://www.descargasrtr.com/p/donar.html" title="Donar"><i class="fa fa-paypal"></i></a>
+  </div>
+
+</div>
+ </header>
+  
+  
+<body>
 <!-- JS Script Configuracion -->
   <script src="/assets/js/header.js"></script>
   <script src="/assets/js/subir.js" defer></script>
-
-
-  <div id="menuOverlay" onclick="toggleMenu()"></div>
-
-  <div id="mobileMenu">
-    <div class="mobile-menu-items">
-      <a href="/"><i class="fa fa-home"></i>Inicio</a>
-      <a href="/Anime"><i class="fa fa-play-circle"></i>Anime</a>
-      <a href="/Hentai"><i class="fa fa-heart"></i>Hentai</a>
-      <a href="/Doujins"><i class="fa fa-book"></i>Doujins</a>
-      <a href="/Rule34"><i class="fa fa-fire"></i>Rule34</a>
-      <a href="/Erogames"><i class="fa fa-gamepad"></i>Erogames</a>
-      <a href="/Peticiones"><i class="fa fa-comments"></i>Peticiones</a>
-      <a href="/Contacto"><i class="fa fa-envelope"></i>Contacto</a>
-    </div>
-    <div id="mobileIconsBottom">
-      <a id="social-twitter-mobile" title="X/Twitter"><i class="fa fa-twitter"></i></a>
-      <a id="social-whatsapp-mobile" title="WhatsApp"><i class="fa fa-whatsapp"></i></a>
-      <a id="social-facebook-mobile" title="Facebook"><i class="fa fa-facebook"></i></a>
-      <a id="social-youtube-mobile" title="YouTube"><i class="fa fa-youtube-play"></i></a>
-      <a id="social-donar-mobile" title="Donar"><i class="fa fa-paypal"></i></a>
-    </div>
-  </div>
-
-  <header class="header-wrapper">
-    <div class="header-container">
-      <!-- Botón Menú a la izquierda -->
-      <button class="menu-toggle" onclick="toggleMenu()">
-        <i class="fa fa-bars"></i>
-      </button>
-
-      <!-- Logo centrado -->
-      <div class="header-logo">
-        <a href="/">
-          <img src="/assets/img/AnimeRTR.webp"
-            alt="AnimeRTR" />
-        </a>
-      </div>
-
-      <!-- Menú PC -->
-      <nav class="header-nav">
-        <a href="/">Inicio</a>
-        <a href="/Anime">Anime</a>
-        <a href="/Hentai">Hentai</a>
-        <a href="/Doujins">Doujins</a>
-        <a href="/Rule34">Rule34</a>
-        <a href="/Erogames">Erogames</a>
-        <a href="/Peticiones">Peticiones</a>
-        <a href="/Contacto">Contacto</a>
-      </nav>
-
-      <!-- Redes sociales PC -->
-      <div class="header-social">
-         <a id="social-twitter-pc" title="X/Twitter"><i class="fa fa-twitter"></i></a>
-         <a id="social-whatsapp-pc" title="WhatsApp"><i class="fa fa-whatsapp"></i></a>
-         <a id="social-facebook-pc" title="Facebook"><i class="fa fa-facebook"></i></a>
-         <a id="social-youtube-pc" title="YouTube"><i class="fa fa-youtube-play"></i></a>
-         <a id="social-donar-pc" title="Donar"><i class="fa fa-paypal"></i></a>
-      </div>
-
-
-      <!-- Icono búsqueda derecha -->
-      <a href="#" class="search-icon"><i class="fa fa-search"></i></a>
-    </div>
- </header>
 
   <!-- AQUI COMIENZA EL HTML NORMAL CON JS NORMAL -->
 
