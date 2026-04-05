@@ -30,6 +30,10 @@
     readout.textContent = Math.round(zoom * 100) + '%';
     localStorage.setItem('siteZoom', String(zoom));
   }
+  toggle.onclick = (e) => {
+  e.stopPropagation(); // 🔥 evita que el click llegue al document
+  widget.dataset.open = widget.dataset.open === "1" ? "0" : "1";
+};
 
   // cargar guardado
   const saved = parseFloat(localStorage.getItem('siteZoom'));
