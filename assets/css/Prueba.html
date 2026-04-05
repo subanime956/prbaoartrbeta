@@ -1,0 +1,221 @@
+<style>
+/* ====== ZOOM WIDGET (LEFT + COLLAPSIBLE UP) ====== */
+#zoomWidget{
+  position: fixed;
+  left: 14px;
+  bottom: 14px;
+  z-index: 99999;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* Toggle button */
+#zoomToggle{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  border: 0;
+  cursor: pointer;
+  padding: 10px 12px;
+  border-radius: 14px;
+  color: #fff;
+  background: rgba(20,20,20,.70);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+}
+
+#zoomToggle .zw-icon{
+  width: 22px;
+  height: 22px;
+  display:block;
+  opacity:.95;
+}
+
+#zoomToggle .zw-label{
+  font-weight: 700;
+  font-size: 14px;
+}
+
+#zoomToggle .zw-caret{
+  width: 16px;
+  height: 16px;
+  transition: transform .18s ease;
+}
+
+/* Panel */
+#zoomPanel{
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 10px);
+  width: 220px;
+
+  border-radius: 16px;
+  padding: 10px;
+  background: rgba(20,20,20,.70);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0,0,0,.25);
+  color:#fff;
+
+  transform: translateY(10px) scale(.98);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+#zoomWidget[data-open="1"] #zoomPanel{
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+#zoomWidget[data-open="1"] #zoomToggle .zw-caret{
+  transform: rotate(180deg);
+}
+
+.zw-row{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.zw-pill{
+  flex:1;
+  height: 40px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius: 12px;
+  background: rgba(255,255,255,.10);
+  font-weight: 700;
+  font-size:11px;
+}
+
+.zw-btn{
+  width: 44px;
+  height: 40px;
+  border-radius: 12px;
+  border: 0;
+  background: rgba(255,255,255,.12);
+  color:#fff;
+  cursor:pointer;
+  font-size: 18px;
+  font-weight: 900;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.zw-btn:hover{ background: rgba(255,255,255,.18); }
+
+.zw-hint{
+  margin-top: 8px;
+  font-size: 12px;
+  opacity: .85;
+}
+
+html, body{ overflow-x: hidden; }
+</style>
+
+<!-- ====== ZOOM WIDGET ====== -->
+<div data-open="0" id="zoomWidget">
+
+  <div id="zoomPanel">
+    <div class="zw-row">
+      <button class="zw-btn" id="zOut">−</button>
+      <div class="zw-pill" id="zoom-readout">100%</div>
+      <button class="zw-btn" id="zIn">+</button>
+      <button class="zw-btn" id="zReset">↺</button>
+    </div>
+
+    <div class="zw-hint">
+      Predeterminado: <b>80% en móvil</b> y <b>100% en PC</b>. Se guarda automáticamente.
+    </div>
+  </div>
+
+  <button id="zoomToggle">
+    <svg class="zw-icon" viewBox="0 0 24 24">
+      <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="white" stroke-width="2"/>
+      <path d="M16.2 16.2 21 21" stroke="white" stroke-width="2"/>
+      <path d="M10.5 7.5v6" stroke="white" stroke-width="2"/>
+      <path d="M7.5 10.5h6" stroke="white" stroke-width="2"/>
+    </svg>
+
+    <span class="zw-label">Zoom</span>
+
+    <svg class="zw-caret" viewBox="0 0 24 24">
+      <path d="M6 9l6 6 6-6" stroke="white" stroke-width="2"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+(function(){
+  const widget  = document.getElementById('zoomWidget');
+  const toggle  = document.getElementById('zoomToggle');
+  const readout = document.getElementById('zoom-readout');
+
+  function isMobile(){
+    return window.innerWidth <= 768;
+  }
+
+  let zoom = isMobile() ? 0.80 : 1.00;
+
+  const step = 0.05;
+  const minZoom = 0.60;
+  const maxZoom = 1.20;
+
+  function isFirefox(){
+    return navigator.userAgent.toLowerCase().includes('firefox');
+  }
+
+  function applyZoom(){
+    if(!isFirefox()){
+      document.documentElement.style.zoom = zoom;
+      document.documentElement.style.transform = '';
+      document.documentElement.style.width = '';
+    } else {
+      document.documentElement.style.zoom = '';
+      document.documentElement.style.transformOrigin = 'top left';
+      document.documentElement.style.transform = `scale(${zoom})`;
+      document.documentElement.style.width = `calc(100% / ${zoom})`;
+    }
+
+    readout.textContent = Math.round(zoom * 100) + '%';
+    localStorage.setItem('siteZoom', zoom);
+  }
+
+  const saved = parseFloat(localStorage.getItem('siteZoom'));
+  if(!isNaN(saved)){
+    zoom = Math.min(maxZoom, Math.max(minZoom, saved));
+  }
+
+  document.getElementById('zIn').onclick = () => {
+    zoom = Math.min(maxZoom, +(zoom + step).toFixed(2));
+    applyZoom();
+  };
+
+  document.getElementById('zOut').onclick = () => {
+    zoom = Math.max(minZoom, +(zoom - step).toFixed(2));
+    applyZoom();
+  };
+
+  document.getElementById('zReset').onclick = () => {
+    zoom = isMobile() ? 0.80 : 1.00;
+    applyZoom();
+  };
+
+  toggle.onclick = () => {
+    widget.dataset.open = widget.dataset.open === "1" ? "0" : "1";
+  };
+
+  document.addEventListener('click', (e) => {
+    if(!widget.contains(e.target)){
+      widget.dataset.open = "0";
+    }
+  });
+
+  applyZoom();
+})();
+</script>
