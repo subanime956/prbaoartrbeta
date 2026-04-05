@@ -32,7 +32,7 @@ fetch('/data.json')
   const fin = inicio + porPagina;
   const paginaItems = filtrados.slice(inicio, fin);
 
-  resultados.innerHTML = "";
+  resultados.innerHTML = ""; 
 
   paginaItems.forEach(item => {
   resultados.innerHTML += `
