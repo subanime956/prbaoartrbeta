@@ -2,6 +2,52 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: 'Comic Neue';
+  src: url('../fuentes/comic-neue/ComicNeue-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'Comic Neue';
+  src: url('../fuentes/comic-neue/ComicNeue-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fuentes/open-sans/OpenSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fuentes/open-sans/OpenSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url('../fuentes/open-sans/OpenSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Rubik';
+  src: url('../fuentes/rubik/Rubik-Regular.ttf') format('truetype');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Rubik';
+  src: url('../fuentes/rubik/Rubik-Medium.ttf') format('truetype');
+  font-weight: 500;
+}
+@font-face {
+  font-family: 'Rubik';
+  src: url('../fuentes/rubik/Rubik-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+
 /* RESET */
 html, body {
   margin: 0;
