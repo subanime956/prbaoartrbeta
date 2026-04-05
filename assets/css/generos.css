@@ -171,7 +171,7 @@
 #paginacion {
   display: flex;
   flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 5px;
 }
 #paginacion a {
   margin: 4px;
