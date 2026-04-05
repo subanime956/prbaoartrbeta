@@ -51,11 +51,9 @@ fetch('/data.json')
   `;
 });
 
-  const totalPaginas = Math.ceil(filtrados.length / porPagina);
+ let pagHTML = "";
 
-  let pagHTML = "";
-
-const maxVisible = 5; // 👈 cuántas páginas mostrar
+const maxVisible = 5;
 const totalPaginas = Math.ceil(filtrados.length / porPagina);
 
 // 🔥 botón anterior
@@ -97,13 +95,12 @@ if(end < totalPaginas){
   pagHTML += `<a href="?${buildQuery(totalPaginas)}">${totalPaginas}</a>`;
 }
 
-// 🔥 botón siguient
+// 🔥 botón siguiente
 if(page < totalPaginas){
   pagHTML += `<a href="?${buildQuery(page + 1)}">»</a>`;
 }
 
 document.getElementById("paginacion").innerHTML = pagHTML;
-
 });
 
 function buildQuery(pageNum){
