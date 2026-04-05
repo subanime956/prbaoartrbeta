@@ -195,3 +195,8 @@
   color: white;
   font-weight: bold;
 }
+#paginacion span {
+  margin: 4px;
+  padding: 6px 10px;
+  color: #666;
+}
