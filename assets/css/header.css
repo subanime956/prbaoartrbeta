@@ -10,7 +10,6 @@
   font-weight: 700;
 }
 
-
 @font-face {
   font-family: 'Open Sans';
   src: url('../fuentes/open-sans/OpenSans-Regular.ttf') format('truetype');
@@ -43,7 +42,7 @@
   font-weight: 700;
 }
 
-
+/* HEADER BASE */
 .header-wrapper {
   background-color: #fff;
   position: sticky;
@@ -82,7 +81,6 @@
   transition: color 0.3s ease;
   padding: 5px;
   flex-shrink: 0;
-
 }
 
 .search-icon:hover {
@@ -90,7 +88,7 @@
 }
 
 .menu-toggle {
-  display: block;
+  display: block; /* visible en PC y móvil */
   background: none;
   border: none;
   font-size: 26px;
@@ -100,10 +98,10 @@
   padding: 12px;
 }
 
-/* VERSIÓN MÓVIL AJUSTADA para activarse cuando no hay espacio */
+/* 📱 MÓVIL */
 @media (max-width: 1000px) {
+
   .header-container {
-    
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
@@ -111,28 +109,23 @@
     gap: 12px;
   }
 
-  @media (max-width: 1000px) {
-    .menu-toggle {
-    display: block;
+  .menu-toggle {
     position: absolute;
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
   }
-}
+
   .header-logo {
-    
     text-align: center;
     margin: 10px 0;
   }
 
   .search-icon {
-    display: block;
     position: absolute;
     right: 15px;
     top: 50%;
     transform: translateY(-50%);
-    margin-top: -0.5px;
   }
 
   .header-nav,
@@ -141,98 +134,95 @@
   }
 
   #mobileMenu {
-  position: fixed;
-  top: 0;
-  left: -260px;
-  width: 250px;
-  height: 100%;
-  background-color: #00384d;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-  z-index: 2000;
-  transition: left 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 250px;
+    height: 100%;
+    background-color: #00384d;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+    z-index: 2000;
+    transition: left 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  #mobileMenu.open {
+    left: 0;
+  }
+
+  .mobile-menu-items {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 2px;
+  }
+
+  .mobile-menu-items::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .mobile-menu-items::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  .mobile-menu-items a {
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+  }
+
+  .mobile-menu-items a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .mobile-menu-items a i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+  }
+
+  #mobileIconsBottom {
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    flex-shrink: 0;
+  }
+
+  #mobileIconsBottom a i {
+    color: white;
+    font-size: 18px;
+  }
+
+  #mobileIconsBottom a:hover i {
+    color: #775cdc;
+  }
+
+  #menuOverlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 2000;
+  }
+
+  #menuOverlay.active {
+    display: block;
+  }
 }
 
-#mobileMenu.open {
-  left: 0;
-}
-
-/* Área desplazable */
-.mobile-menu-items {
-  flex-grow: 1;
-  overflow-y: auto;
-  padding-right: 2px;
-}
-
-.mobile-menu-items::-webkit-scrollbar {
-  width: 4px;
-}
-
-.mobile-menu-items::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 3px;
-}
-
-
-/* Ítems del menú */
-.mobile-menu-items a {
-  padding: 14px 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-  display: flex;
-  align-items: center;
-  transition: background-color 0.3s ease;
-}
-
-.mobile-menu-items a:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.mobile-menu-items a i {
-  margin-right: 10px;
-  width: 20px;
-  text-align: center;
-}
-
-/* Fijo abajo */
-#mobileIconsBottom {
-  display: flex;
-  justify-content: space-around;
-  padding: 12px 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  flex-shrink: 0;
-}
-
-#mobileIconsBottom a i {
-  color: white;
-  font-size: 18px;
-}
-
-#mobileIconsBottom a:hover i {
-  color: #775cdc;
-}
-
-#menuOverlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 2000;
-}
-
-#menuOverlay.active {
-  display: block;
-}
-}
-
+/* 💻 PC */
 @media (min-width: 1001px) {
   #mobileMenu,
   #menuOverlay {
