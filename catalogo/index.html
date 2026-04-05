@@ -1,74 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Buscador</title>
 
-<!-- Font Awesome -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
 
-<!-- CSS Style Configuracion -->
+  <!-- CSS Header -->
   <link rel="stylesheet" href="/assets/css/header.css">
+
+  <!-- Otros CSS -->
   <link rel="stylesheet" href="/assets/css/generos.css">
   <link rel="stylesheet" href="/assets/css/copiar.css">
   <link rel="stylesheet" href="/assets/css/subir.css">
-
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title> Buscador </title>
-
 </head>
-
-<body>
-
-<!-- JS Script Configuracion -->
-  <script src="header.js"></script>
-  <script src="subir.js" defer></script>
-
-
-  <div id="menuOverlay" onclick="toggleMenu()"></div>
-
-  <div id="mobileMenu">
-    <div class="mobile-menu-items">
-      <a href="#"><i class="fa fa-home"></i>Inicio</a>
-      <a href="#"><i class="fa fa-play-circle"></i>Anime</a>
-      <a href="#"><i class="fa fa-heart"></i>Hentai</a>
-      <a href="#"><i class="fa fa-book"></i>Doujins</a>
-      <a href="#"><i class="fa fa-gamepad"></i>Juegos</a>
-      <a href="#"><i class="fa fa-ban"></i>DMCA</a>
-      <a href="#"><i class="fa fa-envelope"></i>Contacto</a>
-    </div>
-    <div id="mobileIconsBottom">
-      <a href="https://x.com/sitiosrtr" title="X/Twitter"><i class="fa fa-twitter"></i></a>
-        <a href="https://whatsapp.com/channel/0029Vb5iKDyIiRooDhF2Dj1J" title="WhatsApp"><i class="fa fa-whatsapp"></i></a>
-        <a href="https://www.facebook.com/AnimeRTRh" title="Facebook"><i class="fa fa-facebook"></i></a>
-        <a href="https://www.youtube.com/@animertroficial" title="YouTube"><i class="fa fa-youtube-play"></i></a>
-        <a href="https://www.descargasrtr.com/p/donar.html" title="Donar"><i class="fa fa-paypal"></i></a>
-    </div>
-  </div>
-
-  <header class="header-wrapper">
-<div class="header-container">
-
-  <div class="header-logo">
-    <a href="/">
-      <img src="https://m.animertr.com/assets/img/AnimeRTR.webp" alt="AnimeRTR">
-    </a>
-  </div>
-
-  <a href="#" class="search-icon">
-    <i class="fa fa-search"></i>
-  </a>
-
-  <button class="menu-toggle" onclick="toggleMenu()">
-    <i class="fa fa-bars"></i>
-  </button>
-
-</div>
 
   <!-- AQUI COMIENZA EL HTML NORMAL CON JS NORMAL -->
 
 <body>
-
+<?php include 'header.php'; ?>
     <div class="barra-superior">
     <div class="izquierda">
       <i class="fa fa-tags"></i> Resultados
