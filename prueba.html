@@ -92,24 +92,28 @@ function updateUI() {
 
 window.OneSignalDeferred = window.OneSignalDeferred || [];
 
-OneSignalDeferred.push(async function(OneSignal) {
+OneSignalDeferred.push(function(OneSignal) {
 
-  // 🔥 ESPERA REAL DEL ESTADO (IMPORTANTE)
-  await OneSignal.Notifications.permission;
+  // 🔎 estado inicial (puede tardar)
+  function syncState() {
+    isSubscribed = OneSignal.User.PushSubscription.optedIn;
+    updateUI();
+  }
 
-  // 🔎 estado REAL después de cargar todo
-  isSubscribed = OneSignal.User.PushSubscription.optedIn;
+  // 🔥 primer intento
+  syncState();
 
-  updateUI();
+  // 🔥 segundo intento (cuando OneSignal termina de cargar)
+  setTimeout(syncState, 1000);
 
-  // 🔁 toggle click
+  // 🔁 click toggle (tu lógica original que sí funcionaba)
   btn.addEventListener("click", async function() {
 
     if (OneSignal.User.PushSubscription.optedIn) {
       await OneSignal.User.PushSubscription.optOut();
       isSubscribed = false;
     } else {
-      await OneSignal.User.PushSubscription.optIn();
+      OneSignal.showNativePrompt(); // 👈 IMPORTANTE (no lo quites)
       isSubscribed = true;
     }
 
