@@ -136,7 +136,24 @@
     </div>
   </div>
 
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const boton = document.getElementById("filterToggle");
+      const acordeon = document.getElementById("acordeonGeneros");
 
+      boton.addEventListener("click", function (e) {
+        e.stopPropagation();
+        acordeon.style.display = acordeon.style.display === "block" ? "none" : "block";
+      });
+
+      document.addEventListener("click", function (e) {
+        if (!acordeon.contains(e.target) && e.target !== boton) {
+          acordeon.style.display = "none";
+        }
+      });
+    });
+  </script>
+  
 <div id="resultados" class="container"></div>
 <div id="paginacion"></div>
 
