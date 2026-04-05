@@ -5,20 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Notificaciones PRO</title>
 
-<!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<!-- OneSignal -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script src="/assets/js/Onesignalpush.js" defer></script>
 
 <style>
-body{
-  margin:0;
-  font-family: Arial;
-}
+body{margin:0;font-family:Arial;}
 
-/* HEADER */
 .header{
   height:60px;
   background:#111;
@@ -41,8 +35,8 @@ body{
 .active{ color:#00d1ff; }
 .inactive{ color:#888; }
 
-/* MINI WARNING */
-#notifWarning{
+/* WARNING */
+#notifWarning, #notifToast{
   position:absolute;
   top:60px;
   right:10px;
@@ -56,6 +50,11 @@ body{
   animation:fadeIn 0.2s ease;
 }
 
+#notifToast{
+  background:#fff;
+  color:#111;
+}
+
 #notifWarning img{
   width:100%;
   border-radius:6px;
@@ -63,7 +62,7 @@ body{
   cursor:pointer;
 }
 
-#notifWarning .close{
+.close{
   position:absolute;
   top:5px;
   right:8px;
@@ -75,29 +74,6 @@ body{
 @keyframes fadeIn{
   from{opacity:0; transform:translateY(-5px);}
   to{opacity:1; transform:translateY(0);}
-}
-
-/* TOAST */
-#notifToast{
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%) translateY(20px);
-  background: #fff;
-  color: #111;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  opacity: 0;
-  pointer-events: none;
-  transition: 0.3s;
-  z-index: 9999;
-}
-
-#notifToast.show{
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
 }
 </style>
 </head>
@@ -111,7 +87,7 @@ body{
     <i class="fa fa-bell-slash" id="bellIcon"></i>
   </button>
 
-  <!-- MINI PANEL -->
+  <!-- WARNING -->
   <div id="notifWarning">
     <span class="close" id="closeWarning">✖</span>
     <p style="margin:5px 0;">🔕 Notificaciones bloqueadas</p>
@@ -119,19 +95,28 @@ body{
       <img src="https://media.onesignal.com/web-sdk/bell/edge-unblock.png">
     </a>
   </div>
-</div>
 
-<!-- TOAST -->
-<div id="notifToast"></div>
+  <!-- TOAST REUTILIZABLE -->
+  <div id="notifToast">
+    <span class="close" id="closeToast">✖</span>
+    <p id="toastText" style="margin:5px 0;"></p>
+  </div>
+
+</div>
 
 <script>
 const btn = document.getElementById("notifToggle");
 const icon = document.getElementById("bellIcon");
 const warning = document.getElementById("notifWarning");
-const closeBtn = document.getElementById("closeWarning");
-const toast = document.getElementById("notifToast");
+const closeWarning = document.getElementById("closeWarning");
 
-// ⚡ UI INMEDIATA
+const toast = document.getElementById("notifToast");
+const toastText = document.getElementById("toastText");
+const closeToast = document.getElementById("closeToast");
+
+let toastTimeout;
+
+// UI inmediata
 if (Notification.permission === "granted") {
   icon.className = "fa fa-bell";
   btn.classList.add("active");
@@ -152,12 +137,23 @@ function updateUI(state){
   }
 }
 
+// 🔥 TOAST INTELIGENTE (ANTI-SPAM)
 function showToast(text){
-  toast.textContent = text;
-  toast.classList.add("show");
 
-  setTimeout(() => {
-    toast.classList.remove("show");
+  // cerrar warning si está abierto
+  warning.style.display = "none";
+
+  // cambiar texto
+  toastText.textContent = text;
+
+  // mostrar
+  toast.style.display = "block";
+
+  // reiniciar tiempo si ya estaba activo
+  clearTimeout(toastTimeout);
+
+  toastTimeout = setTimeout(() => {
+    toast.style.display = "none";
   }, 2000);
 }
 
@@ -175,8 +171,8 @@ OneSignalDeferred.push(async function(OneSignal){
 
     const permission = Notification.permission;
 
-    // 🚫 BLOQUEADO
     if(permission === "denied"){
+      toast.style.display = "none";
       warning.style.display = "block";
       return;
     }
@@ -201,7 +197,8 @@ OneSignalDeferred.push(async function(OneSignal){
     }
   });
 
-  closeBtn.onclick = () => warning.style.display = "none";
+  closeWarning.onclick = () => warning.style.display = "none";
+  closeToast.onclick = () => toast.style.display = "none";
 
 });
 </script>
