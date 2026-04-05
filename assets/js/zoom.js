@@ -1,15 +1,10 @@
 (function(){
-  // Zoom predeterminado 80%
-  const zoom = 0.80;
+  const zoom = window.innerWidth <= 768 ? 0.85 : 1.00; // móvil 85%, desktop 100%
 
-  function isFirefox(){
-    return navigator.userAgent.toLowerCase().includes('firefox');
-  }
+  const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 
-  if(!isFirefox()){
+  if(!isFirefox){
     document.documentElement.style.zoom = zoom;
-    document.documentElement.style.transform = '';
-    document.documentElement.style.width = '';
   } else {
     document.documentElement.style.zoom = '';
     document.documentElement.style.transformOrigin = 'top left';
