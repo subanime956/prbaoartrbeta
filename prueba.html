@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mini Header Notificaciones</title>
+<title>Notificaciones Test</title>
 
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<!-- OneSignal (YA LO USAS TÚ) -->
+<!-- OneSignal -->
 <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
 <script src="/assets/js/Onesignalpush.js" defer></script>
 
@@ -29,15 +29,13 @@
     align-items:center;
     justify-content:space-between;
     padding:0 15px;
-    box-sizing:border-box;
   }
 
   .logo{
     font-weight:bold;
-    font-size:18px;
   }
 
-  /* BOTÓN NOTIF */
+  /* BOTÓN */
   #notifToggle{
     font-size:22px;
     background:none;
@@ -58,11 +56,27 @@
   .inactive{
     color:#888;
   }
+
+  /* WARNING */
+  #notifWarning{
+    display:none;
+    background:#222;
+    color:white;
+    text-align:center;
+    padding:15px;
+  }
+
+  #notifWarning img{
+    max-width:220px;
+    border-radius:10px;
+    margin-top:10px;
+    cursor:pointer;
+  }
 </style>
 </head>
 
 <body>
-<div class='onesignal-customlink-container'></div>
+
 <!-- HEADER -->
 <div class="header">
   <div class="logo">MiWeb</div>
@@ -72,9 +86,18 @@
   </button>
 </div>
 
+<!-- WARNING (solo aparece si está bloqueado y hacen click) -->
+<div id="notifWarning">
+  <p>🔕 Tienes las notificaciones bloqueadas</p>
+  <a href="https://media.onesignal.com/web-sdk/bell/edge-unblock.png" target="_blank">
+    <img src="https://media.onesignal.com/web-sdk/bell/edge-unblock.png">
+  </a>
+</div>
+
 <script>
 const btn = document.getElementById("notifToggle");
 const icon = document.getElementById("bellIcon");
+const warning = document.getElementById("notifWarning");
 
 function updateUI(state) {
   if (state) {
@@ -93,27 +116,35 @@ window.OneSignalDeferred = window.OneSignalDeferred || [];
 OneSignalDeferred.push(function(OneSignal) {
 
   function syncState() {
-    const realState = OneSignal.User.PushSubscription.optedIn;
-    updateUI(realState);
+    const opted = OneSignal.User.PushSubscription.optedIn;
+    updateUI(opted);
   }
 
-  // 🔥 sync inicial (doble para evitar delay)
+  // 🔥 estado inicial rápido
   syncState();
-  setTimeout(syncState, 1000);
+  setTimeout(syncState, 300);
 
-  // 🔁 CLICK (SIEMPRE usa estado real)
+  // 🔁 CLICK
   btn.addEventListener("click", async function() {
 
-    const realState = OneSignal.User.PushSubscription.optedIn;
+    const perm = Notification.permission;
 
-    if (realState) {
-      await OneSignal.User.PushSubscription.optOut();
-    } else {
-      OneSignal.showNativePrompt();
+    // 🚫 SOLO AQUÍ detecta bloqueo
+    if (perm === "denied") {
+      warning.style.display = "block";
+      return;
     }
 
-    // 🔥 re-sync después del cambio
-    setTimeout(syncState, 500);
+    const opted = OneSignal.User.PushSubscription.optedIn;
+
+    if (opted) {
+      await OneSignal.User.PushSubscription.optOut();
+    } else {
+      await OneSignal.showNativePrompt();
+    }
+
+    // ⚡ actualización rápida
+    setTimeout(syncState, 200);
   });
 
 });
