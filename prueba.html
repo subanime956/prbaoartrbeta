@@ -62,7 +62,7 @@
 </head>
 
 <body>
-
+<div class='onesignal-customlink-container'></div>
 <!-- HEADER -->
 <div class="header">
   <div class="logo">MiWeb</div>
@@ -76,10 +76,8 @@
 const btn = document.getElementById("notifToggle");
 const icon = document.getElementById("bellIcon");
 
-let isSubscribed = false;
-
-function updateUI() {
-  if (isSubscribed) {
+function updateUI(state) {
+  if (state) {
     icon.className = "fa fa-bell";
     btn.classList.add("active");
     btn.classList.remove("inactive");
@@ -94,30 +92,28 @@ window.OneSignalDeferred = window.OneSignalDeferred || [];
 
 OneSignalDeferred.push(function(OneSignal) {
 
-  // 🔎 estado inicial (puede tardar)
   function syncState() {
-    isSubscribed = OneSignal.User.PushSubscription.optedIn;
-    updateUI();
+    const realState = OneSignal.User.PushSubscription.optedIn;
+    updateUI(realState);
   }
 
-  // 🔥 primer intento
+  // 🔥 sync inicial (doble para evitar delay)
   syncState();
-
-  // 🔥 segundo intento (cuando OneSignal termina de cargar)
   setTimeout(syncState, 1000);
 
-  // 🔁 click toggle (tu lógica original que sí funcionaba)
+  // 🔁 CLICK (SIEMPRE usa estado real)
   btn.addEventListener("click", async function() {
 
-    if (OneSignal.User.PushSubscription.optedIn) {
+    const realState = OneSignal.User.PushSubscription.optedIn;
+
+    if (realState) {
       await OneSignal.User.PushSubscription.optOut();
-      isSubscribed = false;
     } else {
-      OneSignal.showNativePrompt(); // 👈 IMPORTANTE (no lo quites)
-      isSubscribed = true;
+      OneSignal.showNativePrompt();
     }
 
-    updateUI();
+    // 🔥 re-sync después del cambio
+    setTimeout(syncState, 500);
   });
 
 });
