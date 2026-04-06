@@ -30,15 +30,23 @@
 
 <!-- DERECHA -->
 <div class="actions">
+
+  <!-- 🔔 CAMPANA -->
+  <button class="icon-btn" id="notifToggle">
+    <i class="fa fa-bell-slash" id="bellIcon"></i>
+  </button>
+
+  <!-- 🔍 BUSCADOR -->
   <button class="icon-btn" onclick="abrirBusqueda()">
     <i class="fa fa-search"></i>
   </button>
 
+  <!-- ☰ MENU -->
   <button class="icon-btn" onclick="toggleMenu()">
     <i class="fa fa-bars"></i>
   </button>
+
 </div>
-  </div>
 
 <div id="searchBar">
   <input type="text" id="searchInput" placeholder="Buscar anime..." />
@@ -47,6 +55,20 @@
   </button>
 </div>
 
+<!-- WARNING -->
+<div id="notifWarning">
+  <span class="close" id="closeWarning">✖</span>
+  <p style="margin:5px 0;">🔕 Notificaciones bloqueadas</p>
+  <a href="https://media.onesignal.com/web-sdk/bell/edge-unblock.png" target="_blank">
+    <img src="https://media.onesignal.com/web-sdk/bell/edge-unblock.png">
+  </a>
+</div>
+
+<!-- TOAST -->
+<div id="notifToast">
+  <span class="close" id="closeToast">✖</span>
+  <p id="toastText" style="margin:5px 0;"></p>
+</div>
 
 <!-- OVERLAY -->
 
