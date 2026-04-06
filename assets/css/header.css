@@ -241,3 +241,50 @@ html, body {
   color: white;
   font-size: 18px;
 }
+
+
+
+/* CAMPANA */
+#notifToggle.active i {
+  color: #00d1ff;
+}
+#notifToggle.inactive i {
+  color: #fff;
+}
+
+/* PANELES */
+#notifWarning, #notifToast{
+  position:absolute;
+  top:60px;
+  right:10px;
+  width:250px;
+  background:#222;
+  color:white;
+  border-radius:10px;
+  padding:10px;
+  display:none;
+  box-shadow:0 5px 15px rgba(0,0,0,0.3);
+  animation:fadeIn 0.2s ease;
+  z-index:3000;
+}
+
+#notifToast{
+  background:#fff;
+  color:#111;
+}
+
+#notifWarning img{
+  width:100%;
+  border-radius:6px;
+  margin-top:8px;
+  cursor:pointer;
+}
+
+.close{
+  position:absolute;
+  top:5px;
+  right:8px;
+  cursor:pointer;
+  font-size:14px;
+  color:#aaa;
+}
