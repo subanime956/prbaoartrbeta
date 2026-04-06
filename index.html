@@ -7,7 +7,9 @@
   <!-- OneSignal -->
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script src="/assets/js/Onesignalpush.js" defer></script>
-  <!-- Font Awesome --> 
+  <!-- Favicon -->
+  <link rel="icon" href="https://m.animertr.com/assets/img/favicon.ico" type="image/x-icon">
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="/assets/css/font-awesome.min.css"> 
   <!-- CSS Style Configuracion -->
@@ -24,32 +26,27 @@
 
 <header class="header">
   <div class="header-container">
-<!-- LOGO IZQUIERDA -->
-<div class="logo">
-  <a href="/">
+  <!-- LOGO IZQUIERDA -->
+  <div class="logo">
+    <a href="/">
     <img src="https://m.animertr.com/assets/img/AnimeRTR.webp">
-  </a>
-</div>
-
-<!-- DERECHA -->
-<div class="actions">
-
+    </a>
+  </div>
+  <!-- DERECHA -->
+  <div class="actions">
   <!-- 🔔 CAMPANA -->
   <button class="icon-btn" id="notifToggle">
     <i class="fa fa-bell-slash" id="bellIcon"></i>
   </button>
-
   <!-- 🔍 BUSCADOR -->
   <button class="icon-btn" onclick="abrirBusqueda()">
     <i class="fa fa-search"></i>
   </button>
-
   <!-- ☰ MENU -->
   <button class="icon-btn" onclick="toggleMenu()">
     <i class="fa fa-bars"></i>
   </button>
-
-</div>
+  </div>
 
 <div id="searchBar">
   <input type="text" id="searchInput" placeholder="Buscar anime..." />
