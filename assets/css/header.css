@@ -67,7 +67,7 @@ html, body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
+  padding: 10px 10px 10px 15px; /* Arriba | Derecha | Abajo | Izquierda */
 }
 
 /* LOGO */
@@ -79,7 +79,7 @@ html, body {
 /* ICONOS DERECHA */
 .actions {
   display: flex;
-  gap: 16px;
+  gap: 5px;
 }
 
 .actions i {
