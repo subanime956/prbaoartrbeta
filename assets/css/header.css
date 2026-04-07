@@ -57,7 +57,7 @@ html, body {
 
 /* HEADER */
 .header {
-  background: #222222;
+  background: linear-gradient(to right, #0f5ea3, #6e1580);
   position: sticky;
   top: 0;
   z-index: 1000;
