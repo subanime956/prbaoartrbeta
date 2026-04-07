@@ -4,7 +4,7 @@ body {
     margin-left: 0px;
     margin-top: 0px;
     padding: 0;
-    background-color: #241b29;
+    background-color: #222222;
 }
 
 /* GRID */
@@ -134,7 +134,7 @@ body {
         rgba(0,0,0,0) 20%,
         rgba(0,0,0,0.5) 65%,
         rgba(0,0,0,0.75) 85%,
-        #241b29 100%
+        #222222 100%
     );
 }
 
