@@ -4,7 +4,7 @@ body {
     margin: 0 auto;
     padding-top: 0;
     box-sizing: border-box;
-    background: #303240;
+    background: #1f2937;
 }
 
 
@@ -145,25 +145,25 @@ body {
         /* abajo */
         linear-gradient(to bottom,
             rgba(0,0,0,0) 50%,
-            #303240 100%
+            #1f2937 100%
         ),
 
         /* arriba */
         linear-gradient(to top,
             rgba(0,0,0,0) 70%,
-            #303240 100%
+            #1f2937 100%
         ),
 
         /* izquierda */
         linear-gradient(to right,
             rgba(0,0,0,0) 70%,
-            #303240 100%
+            #1f2937 100%
         ),
 
         /* derecha */
         linear-gradient(to left,
             rgba(0,0,0,0) 70%,
-            #303240 100%
+            #1f2937 100%
         );
 }
 
