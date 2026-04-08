@@ -64,22 +64,25 @@ html, body {
 }
 
 .header-container {
+  max-width: 1250px;
+  margin: 0 auto; /* 🔥 centra horizontalmente */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 10px 10px 15px; /* Arriba | Derecha | Abajo | Izquierda */
+  padding: 10px 12px 10px 12px; /* Arriba | Derecha | Abajo | Izquierda */
 }
 
 /* LOGO */
 .logo img {
   height: 35px;
   display: block;
+  filter: saturate(1.4) brightness(1.1);
 }
 
 /* ICONOS DERECHA */
 .actions {
   display: flex;
-  gap: 10px;
+  gap: 5px;
 }
 
 .actions i {
@@ -137,24 +140,34 @@ html, body {
 
 /* Mini Div */
 .icon-btn {
-  background: none;
-  border: none;
+  background: rgba(255, 255, 255, 0.08); /* 🔥 fondo suave */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* borde tenue */
   padding: 10px;
+  border-radius: 5px; /* 🔥 más cuadrado redondeado */
   cursor: pointer;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
+  backdrop-filter: blur(6px); /* ✨ efecto glass */
+  -webkit-backdrop-filter: blur(6px);
+
+  transition: all 0.25s ease;
 }
 
 .icon-btn i {
+ color: rgba(255,255,255,0.9);
+
   color: white;
-  font-size: 18px;
-  pointer-events: none;
+  font-size: 16px;
+  pointer-events: none; /* 👈 importante */
 }
 
+/* Efecto hover bonito */
 .icon-btn:hover {
-  background: rgba(255,255,255,0.1);
-  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+
 }
 
 /* REDES ABAJO */
@@ -203,14 +216,12 @@ html, body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, #1682d8, #921da6);
+  background: #312e81;
   display: flex;
   align-items: center;
-  padding: 0 15px;
-  gap: 10px;
   z-index: 2000;
   transform: translateY(-100%);
-  transition: 0.3s ease;
+  transition: 0.3s ease;  
 }
 
 #searchBar.active {
@@ -218,28 +229,49 @@ html, body {
 }
 
 /* INPUT */
+.search-container {
+  max-width: 1250px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 #searchBar input {
   flex: 1;
+  color: #000;
+  background:rgba(255,255,255,0.9);
   height: 30px;
   border: none;
   border-radius: 6px;
   padding: 0 10px;
   font-size: 14px;
   outline: none;
-  min-width: 0;
+  min-width: 0; /* 🔥 CLAVE OCULTA */
 }
 
 /* BOTÓN X */
 #searchBar button {
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.08); /* 🔥 fondo suave */
+  border: 1px solid rgba(255, 255, 255, 0.15); /* borde tenue */
+  padding: 8px;
+  border-radius: 5px; /* 🔥 más cuadrado redondeado */
   cursor: pointer;
-  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px); /* ✨ efecto glass */
+  -webkit-backdrop-filter: blur(6px);
+  transition: all 0.25s ease;
 }
 
 #searchBar button i {
+  color: rgba(255,255,255,0.9);
   color: white;
-  font-size: 18px;
+  font-size: 16px;
+  pointer-events: none; /* 👈 importante */
 }
 
 
