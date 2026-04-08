@@ -8,7 +8,7 @@ const porPagina = 24;
 
 const resultados = document.getElementById("resultados");
 
-fetch('/data.json')
+fetch('data.json')
 .then(res => res.json())
 .then(data => {
 
