@@ -17,7 +17,9 @@
           display: grid;
           grid-template-columns: repeat(5, 1fr);
           gap: 6px;
-          padding: 10px;
+          max-width: 1250px;
+    margin: 15px auto 0; /* Margin bueno we 🔥 */
+    padding: 0 10px; /* ← izquierda y derecha */
         }
 
 
