@@ -18,8 +18,8 @@
           grid-template-columns: repeat(5, 1fr);
           gap: 6px;
           max-width: 1250px;
-    margin: 15px auto 0; /* Margin bueno we 🔥 */
-    padding: 0 10px; /* ← izquierda y derecha */
+          margin: 15px auto 0; /* Margin bueno we 🔥 */
+          padding: 0 10px; /* ← izquierda y derecha */
         }
 
 
@@ -82,7 +82,7 @@
       color: white;
       padding: 8px 10px;
       position: relative;
-      z-index: 1;
+      z-index: 1; max-width: 1250px;
     }
 
     .barra-superior .izquierda {
