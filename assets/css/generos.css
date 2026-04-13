@@ -1,6 +1,6 @@
         body {
             font-family: "Open Sans", sans-serif;
-            background-color: #f9f9f9;
+            background-color: #1f2937;
             margin: 0;
             padding: 0;
         }
@@ -15,7 +15,7 @@
 
         .container {
           display: grid;
-          grid-template-columns: repeat(6, 1fr);
+          grid-template-columns: repeat(5, 1fr);
           gap: 6px;
           padding: 10px;
         }
