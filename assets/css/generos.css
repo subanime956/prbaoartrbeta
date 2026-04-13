@@ -82,7 +82,9 @@
       color: white;
       padding: 8px 10px;
       position: relative;
-      z-index: 1; max-width: 1250px;
+      z-index: 1; 
+      max-width: 1250px;
+      margin: 0 auto 0; /* Margin bueno we 🔥 */
     }
 
     .barra-superior .izquierda {
