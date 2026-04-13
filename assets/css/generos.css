@@ -78,13 +78,14 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background-color: #00aeff;
+      background-color: #1f2937;
       color: white;
       padding: 8px 10px;
       position: relative;
       z-index: 1; 
       max-width: 1250px;
       margin: 0 auto 0; /* Margin bueno we 🔥 */
+      padding: 0 10px; /* ← izquierda y derecha */
     }
 
     .barra-superior .izquierda {
