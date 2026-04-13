@@ -41,9 +41,6 @@
           
         }
 
-        .card:hover {
-          transform: translateY(-4px);
-        }
         .card-badge {
           position: absolute;
           top: 2%;
@@ -60,7 +57,9 @@
           border:1px solid rgba(255,255,255,0.20);
                 
         }
-
+        .card img {
+          border-radius: 6px; /* igual que la card */
+        }
 
         .card-content {
           
