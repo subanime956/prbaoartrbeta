@@ -187,7 +187,15 @@ body {
 .slider-nav button:hover {
     background: rgba(255,255,255,0.2);
 }
-
+/* BOTONES */
+.nav-btn{
+  pointer-events: all;
+  background: rgba(0,0,0,0.6);
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  cursor: pointer;
+}
 
 
 
